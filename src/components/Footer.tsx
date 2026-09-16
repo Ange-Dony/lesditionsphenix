@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
-import { BookOpen, ShieldCheck, MapPin, Mail, Download } from 'lucide-react';
+import { BookOpen, ShieldCheck, MapPin, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -49,18 +49,10 @@ export function Footer() {
               <li><Link to="/mentions-legales" className="text-gray-400 hover:text-jaune-vif transition-colors">Mentions légales</Link></li>
               <li><Link to="/cgv" className="text-gray-400 hover:text-jaune-vif transition-colors">Conditions Générales de Vente</Link></li>
               <li><Link to="/confidentialite" className="text-gray-400 hover:text-jaune-vif transition-colors">Protection des données</Link></li>
-              <li className="pt-2 flex flex-col gap-1.5">
+              <li className="pt-2">
                 <Link to="/admin" className="inline-flex items-center gap-1.5 text-xs text-jaune hover:text-jaune-vif transition-colors font-mono">
                   <ShieldCheck size={14} /> Espace Administration
                 </Link>
-                <a 
-                  href="/editions-phenix-source.zip"
-                  download="editions-phenix-source.zip"
-                  className="inline-flex items-center gap-1.5 text-xs text-blue-300 hover:text-white transition-colors font-mono"
-                  title="Télécharger l'archive ZIP du code source"
-                >
-                  <Download size={13} className="text-jaune-vif" /> Télécharger le projet (ZIP)
-                </a>
               </li>
             </ul>
           </div>
