@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { BookOpen } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getCachedLogoUrl } from '../lib/logoService';
 
 interface LogoProps {
   className?: string;
@@ -12,28 +12,17 @@ interface LogoProps {
 }
 
 export function Logo({ className, showSlogan = true, size = 'md', variant = 'default' }: LogoProps) {
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [logoUrl, setLogoUrl] = useState<string | null>(() => '/favicon.png');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchLogo() {
-      try {
-        const { data, error } = await supabase
-          .from('parametres_site')
-          .select('logo_url')
-          .limit(1)
-          .single();
-        
-        if (!error && data?.logo_url) {
-          setLogoUrl(data.logo_url);
-        }
-      } catch (err) {
-        console.error("Error fetching logo:", err);
-      } finally {
-        setLoading(false);
+    let isMounted = true;
+    getCachedLogoUrl().then((url) => {
+      if (isMounted && url) {
+        setLogoUrl(url);
       }
-    }
-    fetchLogo();
+    });
+    return () => { isMounted = false; };
   }, []);
 
   const isWhite = variant === 'white';

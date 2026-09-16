@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Sparkles, Award, ArrowRight, ShieldCheck, Star } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getCachedLogoUrl } from '../lib/logoService';
 import { cn } from '../lib/utils';
 
 interface BrandBannerProps {
@@ -10,25 +10,16 @@ interface BrandBannerProps {
 }
 
 export function BrandBanner({ className, variant = 'hero' }: BrandBannerProps) {
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>(() => '/favicon.png');
 
   useEffect(() => {
-    async function fetchLogo() {
-      try {
-        const { data, error } = await supabase
-          .from('parametres_site')
-          .select('logo_url')
-          .limit(1)
-          .single();
-
-        if (!error && data?.logo_url) {
-          setLogoUrl(data.logo_url);
-        }
-      } catch (err) {
-        console.error("Error loading logo for banner:", err);
+    let isMounted = true;
+    getCachedLogoUrl().then((url) => {
+      if (isMounted && url) {
+        setLogoUrl(url);
       }
-    }
-    fetchLogo();
+    });
+    return () => { isMounted = false; };
   }, []);
 
   if (variant === 'compact') {

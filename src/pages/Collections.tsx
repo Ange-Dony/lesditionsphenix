@@ -153,6 +153,8 @@ export function Collections() {
                       <img 
                         src={collection.image_url} 
                         alt={collection.nom}
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (

@@ -195,6 +195,8 @@ export function Catalogue() {
                   <img 
                     src={ouvrage.couverture_url} 
                     alt={`Couverture de ${ouvrage.titre}`}
+                    loading="lazy"
+                    decoding="async"
                     className="max-h-full max-w-full object-contain book-shadow book-shadow-hover rounded-sm transition-transform duration-500"
                   />
                 ) : (

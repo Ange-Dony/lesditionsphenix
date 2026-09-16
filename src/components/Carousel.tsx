@@ -72,6 +72,9 @@ export function Carousel({ collections }: CarouselProps) {
                 alt={collection.nom}
                 className="w-full h-full object-cover object-center transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
                 loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                // @ts-ignore
+                fetchPriority={index === 0 ? "high" : "auto"}
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-bordeaux-dark via-bordeaux to-anthracite flex items-center justify-center">
