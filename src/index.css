@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, serif;
+  --font-display: "Cinzel", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  --color-bordeaux: #701021;
+  --color-bordeaux-dark: #4e0a16;
+  --color-bordeaux-light: #8e1b2f;
+  --color-bordeaux-subtle: #f8eaec;
+
+  --color-dore: #c59b27;
+  --color-dore-light: #dfb53d;
+  --color-dore-dark: #9e7a17;
+  --color-dore-subtle: #fbf6e8;
+
+  --color-bleu: #16325c;
+  --color-bleu-dark: #0c1c33;
+  --color-bleu-royal: #1d4ed8;
+  --color-bleu-light: #2563eb;
+  --color-bleu-subtle: #eff6ff;
+
+  --color-jaune: #eab308;
+  --color-jaune-vif: #facc15;
+  --color-jaune-light: #fef08a;
+  --color-jaune-dark: #ca8a04;
+  --color-jaune-subtle: #fefce8;
+
+  --color-ivoire: #fcfaf7;
+  --color-ivoire-warm: #f6f1e8;
+  --color-ivoire-muted: #ebe4d8;
+
+  --color-anthracite: #1c1d21;
+  --color-anthracite-light: #484b52;
+  --color-anthracite-muted: #737882;
+}
+
+@layer base {
+  body {
+    @apply bg-ivoire text-anthracite antialiased;
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, h4, .font-serif-heading {
+    font-family: var(--font-serif);
+    @apply tracking-normal;
+  }
+
+  .font-display-title {
+    font-family: var(--font-display);
+    @apply tracking-wider uppercase;
+  }
+}
+
+/* Book shadow effect */
+.book-shadow {
+  box-shadow: 
+    -4px 6px 15px -3px rgba(28, 29, 33, 0.12),
+    0 2px 6px -1px rgba(28, 29, 33, 0.08),
+    inset 4px 0 6px -2px rgba(0, 0, 0, 0.15);
+}
+
+.book-shadow-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.book-shadow-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    -8px 16px 28px -4px rgba(112, 16, 33, 0.18),
+    0 6px 14px -2px rgba(28, 29, 33, 0.12),
+    inset 4px 0 6px -2px rgba(0, 0, 0, 0.18);
+}
+
+/* Subtle decorative grain/paper texture helper */
+.paper-texture {
+  background-color: var(--color-ivoire);
+  background-image: radial-gradient(rgba(197, 155, 39, 0.06) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
