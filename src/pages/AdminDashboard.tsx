@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase, uploadFile } from '../lib/supabase';
 import { Ouvrage, Collection, ParametresSite, Matiere, Partenaire, Ressource } from '../types';
-import { BookOpen, LogOut, Settings, ListPlus, Edit3, Trash2, Save, X, Plus, ImageIcon, BookText, Building2, FileText, ExternalLink } from 'lucide-react';
+import { BookOpen, LogOut, Settings, ListPlus, Edit3, Trash2, Save, X, Plus, ImageIcon, BookText, Building2, FileText, ExternalLink, Download } from 'lucide-react';
 import { Logo } from '../components/Logo';
 
 export function AdminDashboard() {
@@ -392,12 +392,24 @@ export function AdminDashboard() {
             <p className="text-gray-500 mt-1">Gérez le contenu de votre site</p>
           </div>
           
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <LogOut size={18} /> Déconnexion
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <a 
+              href="/editions-phenix-source.zip"
+              download="editions-phenix-source.zip"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-bleu hover:bg-bleu-royal text-white font-semibold rounded-lg shadow-sm transition-all"
+              title="Télécharger l'archive ZIP du code source"
+            >
+              <Download size={18} className="text-jaune-vif" />
+              <span>Télécharger le ZIP du projet</span>
+            </a>
+            
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <LogOut size={18} /> Déconnexion
+            </button>
+          </div>
         </div>
 
         {message.text && (
