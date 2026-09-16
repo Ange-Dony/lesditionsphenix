@@ -7,11 +7,12 @@ import { supabase } from '../lib/supabase';
 import { Collection, Ouvrage } from '../types';
 import { WhatsAppButton } from '../components/WhatsAppButton';
 import { useCart } from '../context/CartContext';
+import { FALLBACK_COLLECTIONS, FALLBACK_OUVRAGES } from '../fallbackData';
 
 export function Home() {
-  const [collections, setCollections] = useState<Collection[]>([]);
-  const [ouvragesPhares, setOuvragesPhares] = useState<Ouvrage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [collections, setCollections] = useState<Collection[]>(FALLBACK_COLLECTIONS);
+  const [ouvragesPhares, setOuvragesPhares] = useState<Ouvrage[]>(FALLBACK_OUVRAGES);
+  const [loading, setLoading] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('+33600000000');
   const [texteAccueil, setTexteAccueil] = useState("Bienvenue aux Éditions Phénix. Découvrez nos collections d'ouvrages pédagogiques et littéraires, conçus pour inspirer, éduquer et accompagner chaque esprit curieux.");
   const { addToCart } = useCart();

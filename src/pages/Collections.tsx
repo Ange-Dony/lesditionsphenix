@@ -16,11 +16,12 @@ import {
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { cn } from '../lib/utils';
+import { FALLBACK_COLLECTIONS, FALLBACK_OUVRAGES } from '../fallbackData';
 
 export function Collections() {
-  const [collections, setCollections] = useState<Collection[]>([]);
-  const [ouvrages, setOuvrages] = useState<Ouvrage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [collections, setCollections] = useState<Collection[]>(FALLBACK_COLLECTIONS);
+  const [ouvrages, setOuvrages] = useState<Ouvrage[]>(FALLBACK_OUVRAGES);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   // Selected collection for modal quick view

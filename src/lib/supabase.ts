@@ -5,8 +5,11 @@ import type { Database } from '../types';
 // The prompt mentioned NEXT_PUBLIC_, but in Vite we map them to VITE_ 
 // Or we just read whatever is available in the env if we use the platform secrets.
 // To support the prompt's request while staying compatible with Vite SPA:
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder_key';
+const DEFAULT_SUPABASE_URL = 'https://sdkvmqvdmmypoclfivvo.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNka3ZtcXZkbW15cG9jbGZpdnZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NjE1MjIsImV4cCI6MjEwNTEzNzUyMn0.WPoslFDPFopd8hGUyyTuTQ8TAkTFdUahYUx4egDR7SY';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
 
 export const supabase = createClient<any>(supabaseUrl, supabaseAnonKey);
 
