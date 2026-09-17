@@ -40,19 +40,19 @@ export function Logo({ className, showSlogan = true, size = 'md', variant = 'def
   };
 
   return (
-    <Link to="/" className={cn("flex items-center gap-3 group", className)}>
+    <Link to="/" className={cn("flex items-center gap-2.5 sm:gap-3 group shrink-0", className)}>
       {!loading && logoUrl ? (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <img 
             src={logoUrl} 
             alt="Les Éditions Phénix - La Maison du Succès" 
             className={cn(
-              "w-auto object-contain transition-transform duration-300 group-hover:scale-105",
-              size === 'sm' ? 'h-9' : size === 'lg' ? 'h-16' : 'h-12'
+              "w-auto object-contain transition-transform duration-300 group-hover:scale-105 shrink-0",
+              size === 'sm' ? 'h-8 sm:h-9' : size === 'lg' ? 'h-14 sm:h-16' : 'h-10 sm:h-12'
             )} 
           />
           {showSlogan && (
-            <div className="flex flex-col">
+            <div className="flex flex-col whitespace-nowrap">
               <span className={cn(
                 "font-display-title font-bold leading-tight tracking-wider",
                 isWhite ? "text-white" : "text-bordeaux",
@@ -64,7 +64,7 @@ export function Logo({ className, showSlogan = true, size = 'md', variant = 'def
                 "text-[9px] sm:text-[10px] tracking-wider font-semibold italic flex items-center gap-1",
                 isWhite ? "text-jaune-vif" : "text-bleu"
               )}>
-                <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-jaune"></span>
+                <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-jaune shrink-0"></span>
                 La Maison du Succès
               </span>
             </div>
@@ -73,7 +73,7 @@ export function Logo({ className, showSlogan = true, size = 'md', variant = 'def
       ) : (
         <>
           <div className={cn(
-            "relative rounded-xl flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-105 overflow-hidden",
+            "relative rounded-xl flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-105 overflow-hidden shrink-0",
             iconSizes[size],
             isWhite 
               ? "bg-gradient-to-br from-bleu-dark via-bleu to-bordeaux-dark text-white border border-jaune/40 shadow-bleu-dark/40" 
@@ -85,27 +85,20 @@ export function Logo({ className, showSlogan = true, size = 'md', variant = 'def
             <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-jaune-vif border-2 border-bleu-dark shadow-xs z-20"></div>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col whitespace-nowrap">
             <span className={cn(
               "font-display-title font-bold leading-tight tracking-wider transition-colors",
               isWhite ? "text-white" : "text-bordeaux group-hover:text-bleu",
-              size === 'sm' ? "text-xs" : size === 'lg' ? "text-lg" : "text-[15px]"
+              size === 'sm' ? "text-xs" : size === 'lg' ? "text-lg" : "text-[14px] sm:text-[15px]"
             )}>
-              Les Éditions
-            </span>
-            <span className={cn(
-              "font-display-title font-extrabold leading-none tracking-widest",
-              isWhite ? "text-jaune-vif" : "text-dore",
-              size === 'sm' ? "text-sm" : size === 'lg' ? "text-xl" : "text-[17px]"
-            )}>
-              Phénix
+              Les Éditions Phénix
             </span>
             {showSlogan && (
               <span className={cn(
-                "text-[9.5px] uppercase tracking-[0.16em] font-bold mt-0.5 flex items-center gap-1",
+                "text-[9px] sm:text-[9.5px] uppercase tracking-[0.14em] font-bold mt-0.5 flex items-center gap-1",
                 isWhite ? "text-amber-200" : "text-bleu"
               )}>
-                <span className="w-1.5 h-1.5 rounded-full bg-jaune inline-block"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-jaune inline-block shrink-0"></span>
                 La Maison du Succès
               </span>
             )}
