@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 import { Partenaire } from '../types';
 import { MapPin, Phone, Building2, Search, GraduationCap, Handshake, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOHead } from '../components/SEOHead';
 
 export function Partenaires() {
   const [partenaires, setPartenaires] = useState<Partenaire[]>([]);
@@ -36,6 +37,12 @@ export function Partenaires() {
 
   return (
     <div className="min-h-screen pb-20">
+      <SEOHead 
+        title="Partenaires & Librairies – Réseau Éducatif Côte d'Ivoire"
+        description="Consultez la liste des lycées, collèges et librairies en Côte d'Ivoire qui diffusent les manuels et annales des Éditions Phénix."
+        keywords="librairies abidjan, établissements partenaires éditions phénix, distributeurs manuels scolaires côte d'ivoire"
+      />
+
       {/* Editorial Header Section with Blue & Yellow Accents */}
       <section className="relative bg-gradient-to-r from-bleu-dark via-bordeaux to-bleu-dark border-b-2 border-jaune/40 text-white py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 opacity-10 paper-texture pointer-events-none"></div>

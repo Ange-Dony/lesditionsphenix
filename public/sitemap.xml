@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Page d'accueil : Les Éditions Phénix - La Maison du Succès -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Catalogue complet des manuels ivoiriens, annales et ouvrages -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Nos 7 Collections Éditoriales -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/collections</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Ressources Pédagogiques & Fiches de Révision -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/ressources</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- À Propos de la Maison d'Édition Ivoirienne -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/a-propos</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Partenaires, Écoles & Librairies -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/partenaires</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Collections Directes : 1. Collection Archives (Histoire-Géo) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=71c185e9-405f-459a-8631-522c49984a0c</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Collections Directes : 2. Collection École et Métiers (CMC) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=d2d39434-5d5a-4215-bf0b-6f3546d6975c</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Collections Directes : 3. Collection Jeunes Citoyens (EDHC) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=ed10fefa-4a50-48e8-b206-012ea00b9048</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Collections Directes : 4. Collection Succès (Annales BEPC/BAC, Citations Philosophiques, Construction Graphique) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=ef018503-0122-415b-a58c-e68d667ea227</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Collections Directes : 5. Collection Polyglotte (Anglais & Langues) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=813b8958-9678-4ba0-9c36-aa7afc7b6324</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Collections Directes : 6. Collection Racines (Français, Dictée-Questions) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=19d19ec6-b2ec-4d46-89af-840fbb49c2e9</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Collections Directes : 7. Collection Papyrus (Théâtre & Littérature) -->
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=f228f276-4714-437e-bbf5-057869987c43</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+</urlset>

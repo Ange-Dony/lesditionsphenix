@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { ParametresSite } from '../types';
 import { WhatsAppButton } from '../components/WhatsAppButton';
-import { MapPin, Phone, Mail, BookOpen, Award, CheckCircle2, HeartHandshake, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Mail, BookOpen, Award, CheckCircle2, HeartHandshake, Sparkles, Compass, ShieldCheck } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 export function About() {
   const [params, setParams] = useState<ParametresSite | null>(null);
@@ -21,6 +22,12 @@ export function About() {
 
   return (
     <div className="w-full pb-20">
+      <SEOHead 
+        title="À Propos – Maison d'Édition Ivoirienne de Référence"
+        description="Découvrez Les Éditions Phénix • « La Maison du Succès ». Maison d'édition ivoirienne d'excellence basée à Abidjan : manuels scolaires ivoiriens, annales, citations philosophiques et construction graphique."
+        keywords="maison d'édition ivoirienne, maisons d'édition ivoiriennes, les éditions phénix, la maison du succès, éditeur scolaire abidjan, éditeur côte d'ivoire, manuels scolaires ivoiriens"
+      />
+
       {/* Hero with Blue & Yellow Accents */}
       <div className="relative bg-gradient-to-r from-bleu-dark via-bordeaux to-bleu-dark border-b-2 border-jaune/40 text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 opacity-10 paper-texture pointer-events-none"></div>

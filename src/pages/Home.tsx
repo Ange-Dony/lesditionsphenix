@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Carousel } from '../components/Carousel';
 import { BrandBanner } from '../components/BrandBanner';
 import { CollectionBookCarousel } from '../components/CollectionBookCarousel';
-import { ArrowRight, BookOpen, Download, Users, Sparkles, CheckCircle2, GraduationCap, Award, ShieldCheck, ShoppingBag, PhoneCall, Layers, Star } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
+import { ArrowRight, BookOpen, Download, Users, Sparkles, CheckCircle2, GraduationCap, Award, ShieldCheck, ShoppingBag, PhoneCall, Layers, Star, Compass, BarChart3, Quote } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Collection, Ouvrage } from '../types';
 import { WhatsAppButton } from '../components/WhatsAppButton';
@@ -48,6 +49,12 @@ export function Home() {
 
   return (
     <div className="w-full">
+      <SEOHead 
+        title="Accueil – Maison d'Édition Ivoirienne de Référence"
+        description="Les Éditions Phénix • La Maison du Succès : maison d'édition ivoirienne de manuels scolaires conformes, annales BEPC & BAC, construction graphique et citations philosophiques."
+        keywords="les éditions phénix, la maison du succès, manuels ivoiriens, maison d'édition ivoirienne, maisons d'édition ivoiriennes, annales bepc, annales bac, construction graphique, citations philosophiques, le secret des citations, le secret des graphiques"
+      />
+
       {/* Official Brand Banner: Logo, Name & Slogan "La Maison du Succès" */}
       <BrandBanner />
 
@@ -261,6 +268,106 @@ export function Home() {
             })}
           </div>
         )}
+      </section>
+
+      {/* SEO Editorial & Academic Benchmark Section */}
+      <section className="py-16 bg-gradient-to-b from-white via-ivoire-warm/40 to-white border-y border-gray-200/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bleu-subtle border border-bleu/20 text-bleu text-xs font-semibold uppercase tracking-widest mb-3">
+              <Sparkles size={14} className="text-jaune-dark" />
+              <span>Maison d'Édition Ivoirienne de Référence</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-anthracite mb-4">
+              L'Excellence Pédagogique au Cœur de la Côte d'Ivoire
+            </h2>
+            <p className="text-anthracite-muted text-sm sm:text-base leading-relaxed">
+              De l'enseignement fondamental aux classes préparatoires des examens officiels, Les Éditions Phénix (« La Maison du Succès ») développent des manuels ivoiriens, annales et guides méthodologiques conçus par des pédagogues chevronnés pour assurer la pleine réussite scolaire.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Focus 1: Manuels Ivoiriens */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs hover:border-bleu/40 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-bleu-subtle text-bleu flex items-center justify-center mb-4">
+                <BookOpen size={24} />
+              </div>
+              <h3 className="font-serif font-bold text-lg text-anthracite mb-2">
+                Manuels Ivoiriens Agréés
+              </h3>
+              <p className="text-xs sm:text-sm text-anthracite-muted leading-relaxed mb-4">
+                Conformes point par point aux programmes officiels de l'Éducation Nationale en Côte d'Ivoire : Histoire-Géographie (Archives), EDHC (Jeunes Citoyens) et CMC (École et Métiers).
+              </p>
+              <Link 
+                to="/catalogue?collection=71c185e9-405f-459a-8631-522c49984a0c" 
+                className="text-xs font-bold text-bleu hover:text-bordeaux inline-flex items-center gap-1 group"
+              >
+                <span>Explorer les manuels</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Focus 2: Annales BEPC & BAC */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs hover:border-bordeaux/40 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-bordeaux-subtle text-bordeaux flex items-center justify-center mb-4">
+                <Award size={24} />
+              </div>
+              <h3 className="font-serif font-bold text-lg text-anthracite mb-2">
+                Annales BEPC & BAC
+              </h3>
+              <p className="text-xs sm:text-sm text-anthracite-muted leading-relaxed mb-4">
+                La série <em>Code d'accès</em> : annales corrigées et commentées en Histoire-Géo, Philosophie, Physique-Chimie et Anglais pour franchir avec brio les examens nationaux.
+              </p>
+              <Link 
+                to="/catalogue?collection=ef018503-0122-415b-a58c-e68d667ea227" 
+                className="text-xs font-bold text-bordeaux hover:text-bleu inline-flex items-center gap-1 group"
+              >
+                <span>Voir les annales d'examens</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Focus 3: Citations Philosophiques */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs hover:border-jaune-dark/40 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-amber-50 text-jaune-dark flex items-center justify-center mb-4">
+                <Quote size={24} />
+              </div>
+              <h3 className="font-serif font-bold text-lg text-anthracite mb-2">
+                Citations Philosophiques
+              </h3>
+              <p className="text-xs sm:text-sm text-anthracite-muted leading-relaxed mb-4">
+                L'ouvrage de référence <em>Le secret des citations 1ère & Terminale</em> : classification thématique, analyses conceptuelles et exemples dissertation pour réussir l'épreuve de philosophie.
+              </p>
+              <Link 
+                to="/catalogue?search=citations" 
+                className="text-xs font-bold text-jaune-dark hover:text-anthracite inline-flex items-center gap-1 group"
+              >
+                <span>Découvrir l'ouvrage</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Focus 4: Construction Graphique */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs hover:border-bleu/40 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                <BarChart3 size={24} />
+              </div>
+              <h3 className="font-serif font-bold text-lg text-anthracite mb-2">
+                Construction Graphique
+              </h3>
+              <p className="text-xs sm:text-sm text-anthracite-muted leading-relaxed mb-4">
+                Le manuel pratique <em>Le secret des graphiques</em> : techniques de construction de diagrammes, histogrammes, courbes d'évolution et cartographie pour le collège et le lycée.
+              </p>
+              <Link 
+                to="/catalogue?search=graphiques" 
+                className="text-xs font-bold text-indigo-600 hover:text-bordeaux inline-flex items-center gap-1 group"
+              >
+                <span>Consulter le guide</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Institutional / School Partner Callout Banner with Blue & Yellow Palette */}

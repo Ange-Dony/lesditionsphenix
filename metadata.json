@@ -1,6 +1,6 @@
 {
   "name": "Les Éditions Phénix",
-  "description": "Site web de la maison d'édition Les Éditions Phénix, avec catalogue, ressources pédagogiques et interface d'administration.",
+  "description": "Maison d'édition ivoirienne de référence : manuels scolaires ivoiriens, annales d'examens BEPC & BAC, construction graphique, citations philosophiques et ressources pédagogiques.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

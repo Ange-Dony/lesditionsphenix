@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 import { Ressource, Collection, Ouvrage } from '../types';
 import { Search, Filter, FileText, Download, ExternalLink, FileSpreadsheet, File } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { SEOHead } from '../components/SEOHead';
 
 export function Ressources() {
   const [ressources, setRessources] = useState<Ressource[]>([]);
@@ -66,6 +67,11 @@ export function Ressources() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEOHead 
+        title="Ressources Pédagogiques & Fiches de Révision – Manuels Ivoiriens"
+        description="Téléchargez nos fiches de révision, extraits de manuels scolaires ivoiriens, corrigés d'annales BEPC & BAC, cours de construction graphique et citations philosophiques."
+        keywords="ressources pédagogiques, fiches de révision côte d'ivoire, annales corrigées bepc bac, fiches citations philosophiques, construction graphique exercices, spécimens enseignants abidjan"
+      />
       
       {/* Header with Blue & Yellow Accents */}
       <div className="mb-10 pb-8 border-b border-gray-200/80">

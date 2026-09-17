@@ -7,6 +7,7 @@ import { cn } from '../lib/utils';
 import { PDFViewer } from '../components/PDFViewer';
 import { useCart } from '../context/CartContext';
 import { sortCollectionsCanonical, getCollectionOrderIndex } from '../lib/collectionOrder';
+import { SEOHead } from '../components/SEOHead';
 
 export function Catalogue() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -79,8 +80,24 @@ export function Catalogue() {
     setSelectedOuvrage(null); // Optional: close modal on add to cart
   };
 
+  const activeColName = collections.find(c => c.id === selectedCollection)?.nom;
+  const seoTitle = activeColName 
+    ? `${activeColName} – Manuels Scolaires Ivoiriens | Catalogue`
+    : searchQuery 
+    ? `Recherche "${searchQuery}" – Catalogue Manuels & Annales`
+    : "Catalogue des Manuels Scolaires Ivoiriens, Annales & Citations";
+
+  const seoDescription = activeColName
+    ? `Consultez les ouvrages de la ${activeColName} des Éditions Phénix : manuels ivoiriens, exercices et fiches conformes aux programmes officiels en Côte d'Ivoire.`
+    : "Catalogue officiel des Éditions Phénix : manuels scolaires ivoiriens agréés, annales BEPC & BAC, construction graphique, fiches de citations philosophiques et littérature.";
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEOHead 
+        title={seoTitle}
+        description={seoDescription}
+        keywords="catalogue manuels ivoiriens, annales bepc, annales bac, construction graphique, citations philosophiques, livres scolaires côte d'ivoire, livre abidjan"
+      />
       
       {/* Header & Filters with Blue & Yellow Accents */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-gray-200/80">

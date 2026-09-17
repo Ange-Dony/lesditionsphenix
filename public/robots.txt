@@ -1,0 +1,11 @@
+# Robots.txt pour Les Éditions Phénix - La Maison du Succès
+# https://www.leseditionsphenix.com
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin-login
+
+# Sitemaps
+Sitemap: https://www.leseditionsphenix.com/sitemap.xml
+Host: https://www.leseditionsphenix.com

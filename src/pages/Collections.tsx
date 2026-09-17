@@ -18,6 +18,7 @@ import { useCart } from '../context/CartContext';
 import { cn } from '../lib/utils';
 import { FALLBACK_COLLECTIONS, FALLBACK_OUVRAGES } from '../fallbackData';
 import { sortCollectionsCanonical } from '../lib/collectionOrder';
+import { SEOHead } from '../components/SEOHead';
 
 export function Collections() {
   const [collections, setCollections] = useState<Collection[]>(() => sortCollectionsCanonical(FALLBACK_COLLECTIONS));
@@ -63,6 +64,12 @@ export function Collections() {
 
   return (
     <div className="min-h-screen pb-20">
+      <SEOHead 
+        title="Nos 7 Collections Pédagogiques – Manuels Ivoiriens & Annales"
+        description="Découvrez les 7 collections des Éditions Phénix : Archives (Histoire-Géo), École et Métiers (CMC), Jeunes Citoyens (EDHC), Succès (Annales, Citations, Graphiques), Polyglotte, Racines et Papyrus."
+        keywords="collections éditions phénix, collection archives, collection école et métiers, collection jeunes citoyens, collection succès, collection polyglotte, collection racines, collection papyrus, manuels ivoiriens, annales côte d'ivoire"
+      />
+
       {/* Header Section with Blue, Bordeaux & Yellow Accents */}
       <section className="relative bg-gradient-to-r from-bleu-dark via-bordeaux to-bleu-dark text-white py-16 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-2 border-jaune/30">
         <div className="absolute inset-0 opacity-10 paper-texture pointer-events-none"></div>
