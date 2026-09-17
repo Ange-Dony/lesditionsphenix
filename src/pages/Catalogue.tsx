@@ -6,6 +6,7 @@ import { BookOpen, Search, Filter, BookText, Eye, X, ShoppingBag } from 'lucide-
 import { cn } from '../lib/utils';
 import { PDFViewer } from '../components/PDFViewer';
 import { useCart } from '../context/CartContext';
+import { sortCollectionsCanonical, getCollectionOrderIndex } from '../lib/collectionOrder';
 
 export function Catalogue() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,9 +32,18 @@ export function Catalogue() {
           supabase.from('ouvrages').select('*, collections(*)').eq('disponibilite', true).order('created_at', { ascending: false })
         ]);
 
-        if (colRes.data) setCollections(colRes.data);
+        if (colRes.data) {
+          setCollections(sortCollectionsCanonical(colRes.data));
+        }
         if (ouvRes.data) {
-          setOuvrages(ouvRes.data);
+          // Sort default books according to collection canonical order, then creation date
+          const sorted = [...ouvRes.data].sort((a, b) => {
+            const idxA = getCollectionOrderIndex(a.collections?.nom);
+            const idxB = getCollectionOrderIndex(b.collections?.nom);
+            if (idxA !== idxB) return idxA - idxB;
+            return new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime();
+          });
+          setOuvrages(sorted);
           
           // Open detail modal if ouvrage ID is in URL
           if (initialOuvrageId) {

@@ -4,6 +4,7 @@ import { supabase, uploadFile } from '../lib/supabase';
 import { Ouvrage, Collection, ParametresSite, Matiere, Partenaire, Ressource } from '../types';
 import { BookOpen, LogOut, Settings, ListPlus, Edit3, Trash2, Save, X, Plus, ImageIcon, BookText, Building2, FileText, ExternalLink } from 'lucide-react';
 import { Logo } from '../components/Logo';
+import { sortCollectionsCanonical } from '../lib/collectionOrder';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ export function AdminDashboard() {
         supabase.from('ressources').select('*, ouvrages(titre), collections(nom)').order('created_at', { ascending: false })
       ]);
 
-      if (colRes.data) setCollections(colRes.data);
+      if (colRes.data) setCollections(sortCollectionsCanonical(colRes.data));
       if (ouvRes.data) setOuvrages(ouvRes.data);
       if (paramRes.data && paramRes.data[0]) setParametres(paramRes.data[0]);
       if (matRes.data) setMatieres(matRes.data);

@@ -52,19 +52,19 @@ export function Logo({ className, showSlogan = true, size = 'md', variant = 'def
             )} 
           />
           {showSlogan && (
-            <div className="hidden sm:flex flex-col">
+            <div className="flex flex-col">
               <span className={cn(
                 "font-display-title font-bold leading-tight tracking-wider",
                 isWhite ? "text-white" : "text-bordeaux",
-                size === 'sm' ? "text-xs" : size === 'lg' ? "text-base" : "text-[14px]"
+                size === 'sm' ? "text-xs" : size === 'lg' ? "text-base" : "text-[13px] sm:text-[14px]"
               )}>
                 Les Éditions Phénix
               </span>
               <span className={cn(
-                "text-[10px] tracking-wider font-semibold italic flex items-center gap-1",
+                "text-[9px] sm:text-[10px] tracking-wider font-semibold italic flex items-center gap-1",
                 isWhite ? "text-jaune-vif" : "text-bleu"
               )}>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-jaune"></span>
+                <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-jaune"></span>
                 La Maison du Succès
               </span>
             </div>
