@@ -17,9 +17,10 @@ import {
 import { useCart } from '../context/CartContext';
 import { cn } from '../lib/utils';
 import { FALLBACK_COLLECTIONS, FALLBACK_OUVRAGES } from '../fallbackData';
+import { sortCollectionsCanonical } from '../lib/collectionOrder';
 
 export function Collections() {
-  const [collections, setCollections] = useState<Collection[]>(FALLBACK_COLLECTIONS);
+  const [collections, setCollections] = useState<Collection[]>(() => sortCollectionsCanonical(FALLBACK_COLLECTIONS));
   const [ouvrages, setOuvrages] = useState<Ouvrage[]>(FALLBACK_OUVRAGES);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,7 +38,7 @@ export function Collections() {
           supabase.from('ouvrages').select('*, collections(*)').eq('disponibilite', true).order('created_at', { ascending: false })
         ]);
 
-        if (colRes.data) setCollections(colRes.data);
+        if (colRes.data) setCollections(sortCollectionsCanonical(colRes.data));
         if (ouvRes.data) setOuvrages(ouvRes.data);
       } catch (error) {
         console.error("Error fetching collections:", error);

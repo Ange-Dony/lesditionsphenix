@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel } from '../components/Carousel';
 import { BrandBanner } from '../components/BrandBanner';
+import { CollectionBookCarousel } from '../components/CollectionBookCarousel';
 import { ArrowRight, BookOpen, Download, Users, Sparkles, CheckCircle2, GraduationCap, Award, ShieldCheck, ShoppingBag, PhoneCall, Layers, Star } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Collection, Ouvrage } from '../types';
 import { WhatsAppButton } from '../components/WhatsAppButton';
 import { useCart } from '../context/CartContext';
 import { FALLBACK_COLLECTIONS, FALLBACK_OUVRAGES } from '../fallbackData';
+import { sortCollectionsCanonical } from '../lib/collectionOrder';
 
 export function Home() {
   const [collections, setCollections] = useState<Collection[]>(FALLBACK_COLLECTIONS);
-  const [ouvragesPhares, setOuvragesPhares] = useState<Ouvrage[]>(FALLBACK_OUVRAGES);
+  const [ouvrages, setOuvrages] = useState<Ouvrage[]>(FALLBACK_OUVRAGES);
   const [loading, setLoading] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('+33600000000');
   const [texteAccueil, setTexteAccueil] = useState("Bienvenue aux Éditions Phénix. Découvrez nos collections d'ouvrages pédagogiques et littéraires, conçus pour inspirer, éduquer et accompagner chaque esprit curieux.");
@@ -22,12 +24,12 @@ export function Home() {
       try {
         const [colRes, ouvRes, paramRes] = await Promise.all([
           supabase.from('collections').select('*').eq('publie', true).order('ordre'),
-          supabase.from('ouvrages').select('*, collections(nom)').eq('disponibilite', true).limit(4),
+          supabase.from('ouvrages').select('*, collections(nom)').eq('disponibilite', true).order('created_at', { ascending: false }),
           supabase.from('parametres_site').select('telephone_whatsapp, texte_accueil').limit(1)
         ]);
 
-        if (colRes.data) setCollections(colRes.data);
-        if (ouvRes.data) setOuvragesPhares(ouvRes.data);
+        if (colRes.data) setCollections(sortCollectionsCanonical(colRes.data));
+        if (ouvRes.data) setOuvrages(ouvRes.data);
         if (paramRes.data && paramRes.data[0]) {
           setWhatsappNumber(paramRes.data[0].telephone_whatsapp);
           if (paramRes.data[0].texte_accueil) {
@@ -213,21 +215,25 @@ export function Home() {
         </div>
       </section>
 
-      {/* Ouvrages Phares */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Nouveautés & Ouvrages Phares : 7 Carrousels par Collection */}
+      <section className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
           <div>
-            <span className="font-display-title text-xs font-semibold text-dore uppercase tracking-widest block mb-2">
-              Sélection Éditoriale
-            </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bleu-subtle border border-bleu/20 text-bleu text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-jaune-vif animate-pulse"></span>
+              <span>Nos 7 Collections Éditoriales</span>
+            </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-anthracite mb-2">
               Nouveautés & Ouvrages Phares
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-bordeaux to-dore rounded-full"></div>
+            <p className="text-anthracite-muted text-sm max-w-2xl">
+              Parcourez les nouveautés et les manuels de référence classés par collection, de l'histoire-géographie aux langues vivantes et à la préparation aux examens.
+            </p>
+            <div className="w-20 h-1 bg-gradient-to-r from-bordeaux via-jaune-vif to-bleu rounded-full mt-3"></div>
           </div>
           <Link 
             to="/catalogue" 
-            className="inline-flex items-center gap-2 text-sm font-semibold text-bordeaux hover:text-dore transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-bordeaux hover:text-bleu transition-colors group self-start sm:self-auto"
           >
             <span>Voir l'intégralité du catalogue</span>
             <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
@@ -235,84 +241,24 @@ export function Home() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-96 bg-gray-200 animate-pulse rounded-2xl"></div>
+          <div className="space-y-8">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-72 bg-gray-100 animate-pulse rounded-3xl"></div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
-            {ouvragesPhares.map((ouvrage) => (
-              <div 
-                key={ouvrage.id} 
-                className="group flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200/80 hover:border-bordeaux/30"
-              >
-                <div className="aspect-[3/4] w-full bg-ivoire-warm relative overflow-hidden flex items-center justify-center p-4">
-                  {/* Subtle book spine shadow on the left */}
-                  <div className="absolute top-0 left-0 bottom-0 w-3 bg-gradient-to-r from-black/20 via-black/5 to-transparent z-10 pointer-events-none"></div>
-
-                  {ouvrage.couverture_url ? (
-                    <img 
-                      src={ouvrage.couverture_url} 
-                      alt={`Couverture de ${ouvrage.titre}`}
-                      loading="lazy"
-                      decoding="async"
-                      className="max-h-full max-w-full object-contain book-shadow book-shadow-hover rounded-sm"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-white rounded-lg border border-dashed border-gray-300">
-                      <BookOpen size={40} className="text-gray-300 mb-3" />
-                      <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Couverture en cours</span>
-                    </div>
-                  )}
-
-                  {ouvrage.collections?.nom && (
-                    <span className="absolute top-3 right-3 bg-bordeaux text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm z-20">
-                      {ouvrage.collections.nom}
-                    </span>
-                  )}
-                </div>
-
-                <div className="p-5 flex flex-col flex-grow">
-                  <span className="text-[11px] font-semibold text-dore-dark uppercase tracking-wider mb-1">
-                    {ouvrage.matiere || "Éditions Phénix"}
-                  </span>
-                  
-                  <Link to={`/catalogue?ouvrage=${ouvrage.id}`}>
-                    <h3 className="font-serif font-bold text-base text-anthracite leading-snug mb-1 group-hover:text-bordeaux transition-colors line-clamp-2">
-                      {ouvrage.titre}
-                    </h3>
-                  </Link>
-
-                  <p className="text-anthracite-muted text-xs italic mb-4">
-                    {ouvrage.auteur}
-                  </p>
-
-                  <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
-                    <div>
-                      {ouvrage.afficher_prix !== false ? (
-                        <span className="font-bold text-base text-bordeaux font-serif">
-                          {ouvrage.prix.toLocaleString('fr-FR')} FCFA
-                        </span>
-                      ) : (
-                        <span className="text-xs font-medium text-gray-500">
-                          Sur devis
-                        </span>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => addToCart(ouvrage)}
-                      className="p-2 rounded-lg bg-ivoire-warm hover:bg-bordeaux hover:text-white text-anthracite transition-colors border border-gray-200/80 shadow-2xs"
-                      title="Ajouter au panier"
-                      aria-label={`Ajouter ${ouvrage.titre} au panier`}
-                    >
-                      <ShoppingBag size={16} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="space-y-10 sm:space-y-12">
+            {collections.map((col, idx) => {
+              const colOuvrages = ouvrages.filter(o => o.collection_id === col.id);
+              return (
+                <CollectionBookCarousel
+                  key={col.id}
+                  collection={col}
+                  ouvrages={colOuvrages}
+                  index={idx}
+                />
+              );
+            })}
           </div>
         )}
       </section>

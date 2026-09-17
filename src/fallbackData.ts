@@ -29,10 +29,10 @@ export const FALLBACK_COLLECTIONS: Collection[] = [
     created_at: '2026-09-16T15:20:11.866086+00:00'
   },
   {
-    id: 'f228f276-4714-437e-bbf5-057869987c43',
-    nom: 'Collection Papyrus',
-    description: 'Théâtre, Poésie et grandes œuvres du patrimoine littéraire et africain.',
-    image_url: 'https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/collections/0.6860794753790214.webp',
+    id: 'ef018503-0122-415b-a58c-e68d667ea227',
+    nom: 'Collection Succès',
+    description: 'Annales, méthodologie, résumés, citations et préparation intensive aux examens (BEPC, BAC).',
+    image_url: 'https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/collections/0.3834159316860618.webp',
     ordre: 4,
     publie: true,
     created_at: '2026-09-16T15:20:11.866086+00:00'
@@ -56,10 +56,10 @@ export const FALLBACK_COLLECTIONS: Collection[] = [
     created_at: '2026-09-16T15:20:11.866086+00:00'
   },
   {
-    id: 'ef018503-0122-415b-a58c-e68d667ea227',
-    nom: 'Collection Succès',
-    description: 'Annales, méthodologie, résumés, citations et préparation intensive aux examens (BEPC, BAC).',
-    image_url: 'https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/collections/0.3834159316860618.webp',
+    id: 'f228f276-4714-437e-bbf5-057869987c43',
+    nom: 'Collection Papyrus',
+    description: 'Théâtre, Poésie et grandes œuvres du patrimoine littéraire et africain.',
+    image_url: 'https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/collections/0.6860794753790214.webp',
     ordre: 7,
     publie: true,
     created_at: '2026-09-16T15:20:11.866086+00:00'
