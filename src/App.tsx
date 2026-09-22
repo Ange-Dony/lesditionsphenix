@@ -59,6 +59,8 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="catalogue" element={<Catalogue />} />
+              <Route path="catalogue/ouvrage/:id" element={<Catalogue />} />
+              <Route path="livre/:id" element={<Catalogue />} />
               <Route path="collections" element={<Collections />} />
               <Route path="ressources" element={<Ressources />} />
               <Route path="a-propos" element={<About />} />

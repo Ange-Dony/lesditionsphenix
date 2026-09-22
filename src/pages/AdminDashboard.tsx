@@ -863,36 +863,79 @@ export function AdminDashboard() {
 
       {/* Collection Modal */}
       {isCollectionModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold">{editingCollection?.id ? 'Modifier la Collection' : 'Nouvelle Collection'}</h3>
-              <button onClick={() => setIsCollectionModalOpen(false)} className="text-gray-400 hover:text-gray-800"><X size={24} /></button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            <div className="px-5 py-3.5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70 shrink-0">
+              <h3 className="text-base font-bold text-anthracite">
+                {editingCollection?.id ? 'Modifier la Collection' : 'Nouvelle Collection'}
+              </h3>
+              <button 
+                onClick={() => setIsCollectionModalOpen(false)} 
+                className="text-gray-400 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
             </div>
-            <form onSubmit={handleSaveCollection} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Nom</label>
-                <input required type="text" value={editingCollection?.nom || ''} onChange={e => setEditingCollection({...editingCollection, nom: e.target.value})} className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Description</label>
-                <textarea value={editingCollection?.description || ''} onChange={e => setEditingCollection({...editingCollection, description: e.target.value})} className="w-full p-2 border rounded" rows={3} />
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1">Ordre d'affichage</label>
-                  <input type="number" value={editingCollection?.ordre || 0} onChange={e => setEditingCollection({...editingCollection, ordre: parseInt(e.target.value)})} className="w-full p-2 border rounded" />
+            <form onSubmit={handleSaveCollection} className="flex flex-col flex-1 min-h-0">
+              <div className="p-5 overflow-y-auto flex-1 space-y-3.5 text-sm">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nom *</label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={editingCollection?.nom || ''} 
+                    onChange={e => setEditingCollection({...editingCollection, nom: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                  />
                 </div>
-                <div className="flex-1 flex items-end pb-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" checked={editingCollection?.publie ?? true} onChange={e => setEditingCollection({...editingCollection, publie: e.target.checked})} className="rounded text-bordeaux focus:ring-bordeaux" />
-                    <span className="text-sm font-medium">Publiée</span>
-                  </label>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Description</label>
+                  <textarea 
+                    value={editingCollection?.description || ''} 
+                    onChange={e => setEditingCollection({...editingCollection, description: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    rows={3} 
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3 items-center pt-1">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Ordre d'affichage</label>
+                    <input 
+                      type="number" 
+                      value={editingCollection?.ordre || 0} 
+                      onChange={e => setEditingCollection({...editingCollection, ordre: parseInt(e.target.value) || 0})} 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    />
+                  </div>
+                  <div className="flex items-center pt-5">
+                    <label className="flex items-center gap-2 cursor-pointer select-none">
+                      <input 
+                        type="checkbox" 
+                        checked={editingCollection?.publie ?? true} 
+                        onChange={e => setEditingCollection({...editingCollection, publie: e.target.checked})} 
+                        className="rounded text-bordeaux focus:ring-bordeaux w-4 h-4" 
+                      />
+                      <span className="text-xs font-medium text-gray-700">Publiée sur le site</span>
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div className="pt-4 flex justify-end gap-2">
-                <button type="button" onClick={() => setIsCollectionModalOpen(false)} className="px-4 py-2 border rounded hover:bg-gray-50">Annuler</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-bordeaux text-white rounded hover:bg-bordeaux/90 disabled:opacity-50">{saving ? 'Enregistrement...' : 'Enregistrer'}</button>
+              <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex justify-end gap-2 shrink-0">
+                <button 
+                  type="button" 
+                  onClick={() => setIsCollectionModalOpen(false)} 
+                  className="px-4 py-2 text-xs font-medium border border-gray-300 rounded-lg hover:bg-white text-gray-700 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={saving} 
+                  className="px-4 py-2 text-xs font-medium bg-bordeaux text-white rounded-lg hover:bg-bordeaux-light transition-colors disabled:opacity-50"
+                >
+                  {saving ? 'Enregistrement...' : 'Enregistrer'}
+                </button>
               </div>
             </form>
           </div>
@@ -901,20 +944,49 @@ export function AdminDashboard() {
 
       {/* Matiere Modal */}
       {isMatiereModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold">{editingMatiere?.id ? 'Modifier la Matière' : 'Nouvelle Matière'}</h3>
-              <button onClick={() => setIsMatiereModalOpen(false)} className="text-gray-400 hover:text-gray-800"><X size={24} /></button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] flex flex-col overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            <div className="px-5 py-3.5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70 shrink-0">
+              <h3 className="text-base font-bold text-anthracite">
+                {editingMatiere?.id ? 'Modifier la Matière' : 'Nouvelle Matière'}
+              </h3>
+              <button 
+                onClick={() => setIsMatiereModalOpen(false)} 
+                className="text-gray-400 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
             </div>
-            <form onSubmit={handleSaveMatiere} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Nom de la matière</label>
-                <input required type="text" value={editingMatiere?.nom || ''} onChange={e => setEditingMatiere({...editingMatiere, nom: e.target.value})} className="w-full p-2 border rounded" />
+            <form onSubmit={handleSaveMatiere} className="flex flex-col flex-1 min-h-0">
+              <div className="p-5 overflow-y-auto flex-1 space-y-3.5 text-sm">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nom de la matière *</label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={editingMatiere?.nom || ''} 
+                    onChange={e => setEditingMatiere({...editingMatiere, nom: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    placeholder="ex: Français, Philosophie, EDHC..."
+                  />
+                </div>
               </div>
-              <div className="pt-4 flex justify-end gap-2">
-                <button type="button" onClick={() => setIsMatiereModalOpen(false)} className="px-4 py-2 border rounded hover:bg-gray-50">Annuler</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-bordeaux text-white rounded hover:bg-bordeaux/90 disabled:opacity-50">{saving ? 'Enregistrement...' : 'Enregistrer'}</button>
+              <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex justify-end gap-2 shrink-0">
+                <button 
+                  type="button" 
+                  onClick={() => setIsMatiereModalOpen(false)} 
+                  className="px-4 py-2 text-xs font-medium border border-gray-300 rounded-lg hover:bg-white text-gray-700 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={saving} 
+                  className="px-4 py-2 text-xs font-medium bg-bordeaux text-white rounded-lg hover:bg-bordeaux-light transition-colors disabled:opacity-50"
+                >
+                  {saving ? 'Enregistrement...' : 'Enregistrer'}
+                </button>
               </div>
             </form>
           </div>
@@ -923,315 +995,541 @@ export function AdminDashboard() {
 
       {/* Ouvrage Modal */}
       {isOuvrageModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl p-6 my-8">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold">{editingOuvrage?.id ? 'Modifier l\'Ouvrage' : 'Nouvel Ouvrage'}</h3>
-              <button onClick={() => setIsOuvrageModalOpen(false)} className="text-gray-400 hover:text-gray-800"><X size={24} /></button>
-            </div>
-            <form onSubmit={handleSaveOuvrage} className="space-y-4">
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Titre *</label>
-                  <input required type="text" value={editingOuvrage?.titre || ''} onChange={e => setEditingOuvrage({...editingOuvrage, titre: e.target.value})} className="w-full p-2 border rounded" />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[88vh] flex flex-col overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            {/* Header Sticky */}
+            <div className="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/80 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 bg-bordeaux/10 text-bordeaux rounded-lg">
+                  <BookOpen size={18} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Auteur *</label>
-                  <input required type="text" value={editingOuvrage?.auteur || ''} onChange={e => setEditingOuvrage({...editingOuvrage, auteur: e.target.value})} className="w-full p-2 border rounded" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Collection</label>
-                  <select value={editingOuvrage?.collection_id || ''} onChange={e => setEditingOuvrage({...editingOuvrage, collection_id: e.target.value})} className="w-full p-2 border rounded bg-white">
-                    <option value="">-- Sans collection --</option>
-                    {collections.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Matière</label>
-                  <select value={editingOuvrage?.matiere || ''} onChange={e => setEditingOuvrage({...editingOuvrage, matiere: e.target.value})} className="w-full p-2 border rounded bg-white">
-                    <option value="">-- Sans matière --</option>
-                    {matieres.map(m => <option key={m.id} value={m.nom}>{m.nom}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Niveau</label>
-                  <input type="text" value={editingOuvrage?.niveau || ''} onChange={e => setEditingOuvrage({...editingOuvrage, niveau: e.target.value})} className="w-full p-2 border rounded" placeholder="ex: Terminale" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Prix (FCFA) *</label>
-                  <input required type="number" min="0" step="0.01" value={editingOuvrage?.prix || 0} onChange={e => setEditingOuvrage({...editingOuvrage, prix: parseFloat(e.target.value)})} className="w-full p-2 border rounded" />
-                </div>
-                <div className="flex items-end pb-2">
-                  <label className="flex items-center gap-2 cursor-pointer mb-2 block">
-                    <input type="checkbox" checked={editingOuvrage?.disponibilite ?? true} onChange={e => setEditingOuvrage({...editingOuvrage, disponibilite: e.target.checked})} className="rounded text-bordeaux focus:ring-bordeaux" />
-                    <span className="text-sm font-medium">Disponible (En stock)</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer block">
-                    <input type="checkbox" checked={editingOuvrage?.afficher_prix ?? true} onChange={e => setEditingOuvrage({...editingOuvrage, afficher_prix: e.target.checked})} className="rounded text-bordeaux focus:ring-bordeaux" />
-                    <span className="text-sm font-medium">Afficher le prix</span>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Description</label>
-                <textarea value={editingOuvrage?.description || ''} onChange={e => setEditingOuvrage({...editingOuvrage, description: e.target.value})} className="w-full p-2 border rounded" rows={4} />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <label className="block font-medium mb-2 flex items-center gap-2"><ImageIcon size={18} /> Image de couverture</label>
-                  {editingOuvrage?.couverture_url && !coverFile && (
-                    <div className="mb-2 text-sm text-green-600">✓ Image actuelle sauvegardée</div>
-                  )}
-                  <input type="file" accept="image/*" onChange={e => setCoverFile(e.target.files?.[0] || null)} className="w-full text-sm" />
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <label className="block font-medium mb-2 flex items-center gap-2"><BookText size={18} /> Fichier extrait (PDF)</label>
-                  {editingOuvrage?.extrait_url && !extractFile && (
-                    <div className="mb-2 text-sm text-green-600">✓ Extrait actuel sauvegardé</div>
-                  )}
-                  <input type="file" accept="application/pdf" onChange={e => setExtractFile(e.target.files?.[0] || null)} className="w-full text-sm" />
-                </div>
-              </div>
-
-              <div className="pt-4 flex justify-end gap-2 border-t border-gray-100 mt-6">
-                <button type="button" onClick={() => setIsOuvrageModalOpen(false)} className="px-6 py-2 border rounded hover:bg-gray-50">Annuler</button>
-                <button type="submit" disabled={saving} className="px-6 py-2 bg-bordeaux text-white rounded hover:bg-bordeaux/90 disabled:opacity-50 flex items-center gap-2">
-                  {saving && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
-                  {saving ? 'Enregistrement...' : 'Enregistrer'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      {/* Partenaire Modal */}
-      {isPartenaireModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold">{editingPartenaire?.id ? 'Modifier le Partenaire' : 'Nouveau Partenaire'}</h3>
-              <button onClick={() => setIsPartenaireModalOpen(false)} className="text-gray-400 hover:text-gray-800"><X size={24} /></button>
-            </div>
-            <form onSubmit={handleSavePartenaire} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Nom de l'établissement *</label>
-                <input required type="text" value={editingPartenaire?.nom || ''} onChange={e => setEditingPartenaire({...editingPartenaire, nom: e.target.value})} className="w-full p-2 border rounded" placeholder="ex: Librairie de France" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Adresse (Localisation)</label>
-                <textarea value={editingPartenaire?.adresse || ''} onChange={e => setEditingPartenaire({...editingPartenaire, adresse: e.target.value})} className="w-full p-2 border rounded" rows={3} placeholder="ex: Abidjan, Plateau..." />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Contact</label>
-                <input type="text" value={editingPartenaire?.contact || ''} onChange={e => setEditingPartenaire({...editingPartenaire, contact: e.target.value})} className="w-full p-2 border rounded" placeholder="ex: +225 0102030405" />
-              </div>
-              <div className="pt-4 flex justify-end gap-2">
-                <button type="button" onClick={() => setIsPartenaireModalOpen(false)} className="px-4 py-2 border rounded hover:bg-gray-50">Annuler</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-bordeaux text-white rounded hover:bg-bordeaux/90 disabled:opacity-50">{saving ? 'Enregistrement...' : 'Enregistrer'}</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Ressource Modal */}
-      {isRessourceModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl p-6 my-8">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-anthracite">
-                {editingRessource?.id ? 'Modifier la Ressource' : 'Nouvelle Ressource Pédagogique'}
-              </h3>
-              <button onClick={() => setIsRessourceModalOpen(false)} className="text-gray-400 hover:text-gray-800">
-                <X size={24} />
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveRessource} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Titre de la ressource *</label>
-                <input 
-                  required 
-                  type="text" 
-                  value={editingRessource?.titre || ''} 
-                  onChange={e => setEditingRessource({...editingRessource, titre: e.target.value})} 
-                  className="w-full p-2 border rounded" 
-                  placeholder="ex: Fiche d'exercices - Les Fonctions numériques" 
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Type de ressource *</label>
-                  <select 
-                    required 
-                    value={editingRessource?.type || 'Fiche de cours'} 
-                    onChange={e => setEditingRessource({...editingRessource, type: e.target.value})} 
-                    className="w-full p-2 border rounded bg-white"
-                  >
-                    <option value="Fiche de cours">Fiche de cours</option>
-                    <option value="Corrigé">Corrigé</option>
-                    <option value="Exercices">Exercices</option>
-                    <option value="Guide pédagogique">Guide pédagogique</option>
-                    <option value="Extrait">Extrait</option>
-                    <option value="Document complémentaire">Document complémentaire</option>
-                    <option value="Autre">Autre</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Format du document</label>
-                  <select 
-                    value={editingRessource?.format || 'PDF'} 
-                    onChange={e => setEditingRessource({...editingRessource, format: e.target.value})} 
-                    className="w-full p-2 border rounded bg-white"
-                  >
-                    <option value="PDF">PDF</option>
-                    <option value="Word">Word (.docx)</option>
-                    <option value="Excel">Excel (.xlsx)</option>
-                    <option value="PowerPoint">PowerPoint (.pptx)</option>
-                    <option value="Audio">Audio (MP3)</option>
-                    <option value="Vidéo">Vidéo</option>
-                    <option value="Lien">Lien externe</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Matière</label>
-                  <select 
-                    value={editingRessource?.matiere || ''} 
-                    onChange={e => setEditingRessource({...editingRessource, matiere: e.target.value})} 
-                    className="w-full p-2 border rounded bg-white"
-                  >
-                    <option value="">-- Sans matière --</option>
-                    {matieres.map(m => (
-                      <option key={m.id} value={m.nom}>{m.nom}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Niveau scolaire</label>
-                  <input 
-                    type="text" 
-                    value={editingRessource?.niveau || ''} 
-                    onChange={e => setEditingRessource({...editingRessource, niveau: e.target.value})} 
-                    className="w-full p-2 border rounded" 
-                    placeholder="ex: 6ème, 3ème, Terminale, etc." 
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Ouvrage lié (optionnel)</label>
-                  <select 
-                    value={editingRessource?.ouvrage_id || ''} 
-                    onChange={e => setEditingRessource({...editingRessource, ouvrage_id: e.target.value})} 
-                    className="w-full p-2 border rounded bg-white text-sm"
-                  >
-                    <option value="">-- Aucun ouvrage lié --</option>
-                    {ouvrages.map(o => (
-                      <option key={o.id} value={o.id}>{o.titre}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Collection liée (optionnel)</label>
-                  <select 
-                    value={editingRessource?.collection_id || ''} 
-                    onChange={e => setEditingRessource({...editingRessource, collection_id: e.target.value})} 
-                    className="w-full p-2 border rounded bg-white text-sm"
-                  >
-                    <option value="">-- Aucune collection liée --</option>
-                    {collections.map(c => (
-                      <option key={c.id} value={c.id}>{c.nom}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg space-y-3">
-                <h4 className="font-semibold text-sm text-anthracite">Fichier ou Lien d'accès *</h4>
-                
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Option A : Téléverser un fichier directement (PDF, Word, etc.)
-                  </label>
-                  <input 
-                    type="file" 
-                    onChange={e => {
-                      if (e.target.files && e.target.files[0]) {
-                        setRessourceFile(e.target.files[0]);
-                      }
-                    }} 
-                    className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-bordeaux/10 file:text-bordeaux hover:file:bg-bordeaux/20"
-                  />
-                  {ressourceFile && (
-                    <p className="text-xs text-green-600 mt-1">Fichier sélectionné : {ressourceFile.name}</p>
-                  )}
-                </div>
-
-                <div className="relative flex py-1 items-center">
-                  <div className="flex-grow border-t border-gray-200"></div>
-                  <span className="flex-shrink mx-4 text-gray-400 text-xs uppercase">OU</span>
-                  <div className="flex-grow border-t border-gray-200"></div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Option B : Lien externe (Google Drive, Dropbox, OneDrive, etc.)
-                  </label>
-                  <input 
-                    type="url" 
-                    value={editingRessource?.google_drive_url || ''} 
-                    onChange={e => setEditingRessource({...editingRessource, google_drive_url: e.target.value})} 
-                    className="w-full p-2 border rounded text-sm bg-white" 
-                    placeholder="https://drive.google.com/file/d/... ou https://..." 
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Si vous utilisez Google Drive, assurez-vous que le lien est en accès public (« Tous les utilisateurs disposant du lien »).
+                  <h3 className="text-base font-bold text-anthracite leading-tight">
+                    {editingOuvrage?.id ? 'Modifier l\'Ouvrage' : 'Ajouter un Nouvel Ouvrage'}
+                  </h3>
+                  <p className="text-[11px] text-gray-500">
+                    Complétez les informations du livre, sa couverture et son extrait à feuilleter
                   </p>
                 </div>
               </div>
+              <button 
+                onClick={() => setIsOuvrageModalOpen(false)} 
+                className="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-              <div>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input 
-                    type="checkbox" 
-                    checked={editingRessource?.publie ?? true} 
-                    onChange={e => setEditingRessource({...editingRessource, publie: e.target.checked})} 
-                    className="rounded text-bordeaux focus:ring-bordeaux" 
-                  />
-                  <span className="text-sm font-medium text-gray-700">Publier cette ressource immédiatement sur le site</span>
-                </label>
+            {/* Form Body with 2-Column Responsive Layout */}
+            <form onSubmit={handleSaveOuvrage} className="flex flex-col flex-1 min-h-0">
+              <div className="p-4 sm:p-5 overflow-y-auto flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                  
+                  {/* Colonne Gauche : Métadonnées du livre (7 cols) */}
+                  <div className="md:col-span-7 space-y-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        Titre de l'ouvrage <span className="text-bordeaux">*</span>
+                      </label>
+                      <input 
+                        required 
+                        type="text" 
+                        value={editingOuvrage?.titre || ''} 
+                        onChange={e => setEditingOuvrage({...editingOuvrage, titre: e.target.value})} 
+                        className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                        placeholder="ex: Le secret des citations philosophiques"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        Auteur(s) <span className="text-bordeaux">*</span>
+                      </label>
+                      <input 
+                        required 
+                        type="text" 
+                        value={editingOuvrage?.auteur || ''} 
+                        onChange={e => setEditingOuvrage({...editingOuvrage, auteur: e.target.value})} 
+                        className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                        placeholder="ex: Dr. Kouadio & Collectif Phénix"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Collection</label>
+                        <select 
+                          value={editingOuvrage?.collection_id || ''} 
+                          onChange={e => setEditingOuvrage({...editingOuvrage, collection_id: e.target.value})} 
+                          className="w-full px-2.5 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux"
+                        >
+                          <option value="">-- Sans collection --</option>
+                          {collections.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Matière</label>
+                        <select 
+                          value={editingOuvrage?.matiere || ''} 
+                          onChange={e => setEditingOuvrage({...editingOuvrage, matiere: e.target.value})} 
+                          className="w-full px-2.5 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux"
+                        >
+                          <option value="">-- Sans matière --</option>
+                          {matieres.map(m => <option key={m.id} value={m.nom}>{m.nom}</option>)}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Niveau scolaire</label>
+                        <input 
+                          type="text" 
+                          value={editingOuvrage?.niveau || ''} 
+                          onChange={e => setEditingOuvrage({...editingOuvrage, niveau: e.target.value})} 
+                          className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                          placeholder="ex: Terminale A & D, 3e..." 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">
+                          Prix en FCFA <span className="text-bordeaux">*</span>
+                        </label>
+                        <input 
+                          required 
+                          type="number" 
+                          min="0" 
+                          step="1" 
+                          value={editingOuvrage?.prix || 0} 
+                          onChange={e => setEditingOuvrage({...editingOuvrage, prix: parseFloat(e.target.value) || 0})} 
+                          className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux font-semibold" 
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        Description / Résumé pédagogique
+                      </label>
+                      <textarea 
+                        value={editingOuvrage?.description || ''} 
+                        onChange={e => setEditingOuvrage({...editingOuvrage, description: e.target.value})} 
+                        className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                        rows={3} 
+                        placeholder="Présentation du manuel, points forts, conformité aux programmes du Ministère..."
+                      />
+                    </div>
+                  </div>
+
+                  {/* Colonne Droite : Statut, Couverture & Extrait PDF (5 cols) */}
+                  <div className="md:col-span-5 space-y-3 flex flex-col">
+                    
+                    {/* Boîte Disponibilité */}
+                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl space-y-2">
+                      <span className="text-[11px] font-bold text-anthracite uppercase tracking-wide block">
+                        Disponibilité & Affichage
+                      </span>
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                          <input 
+                            type="checkbox" 
+                            checked={editingOuvrage?.disponibilite ?? true} 
+                            onChange={e => setEditingOuvrage({...editingOuvrage, disponibilite: e.target.checked})} 
+                            className="rounded text-bordeaux focus:ring-bordeaux w-4 h-4" 
+                          />
+                          <span className="text-xs font-medium text-gray-700">Disponible (En stock)</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                          <input 
+                            type="checkbox" 
+                            checked={editingOuvrage?.afficher_prix ?? true} 
+                            onChange={e => setEditingOuvrage({...editingOuvrage, afficher_prix: e.target.checked})} 
+                            className="rounded text-bordeaux focus:ring-bordeaux w-4 h-4" 
+                          />
+                          <span className="text-xs font-medium text-gray-700">Afficher le prix aux visiteurs</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Boîte Image de Couverture */}
+                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                          <ImageIcon size={14} className="text-bordeaux" />
+                          Couverture (Image)
+                        </label>
+                        {(coverFile || editingOuvrage?.couverture_url) && (
+                          <span className="text-[10px] text-green-700 bg-green-100 font-bold px-1.5 py-0.5 rounded">
+                            {coverFile ? 'Nouveau fichier' : 'Actuelle'}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-16 bg-white border border-gray-200 rounded-md overflow-hidden shrink-0 flex items-center justify-center shadow-2xs">
+                          {coverFile ? (
+                            <img src={URL.createObjectURL(coverFile)} alt="Aperçu" className="w-full h-full object-cover" />
+                          ) : editingOuvrage?.couverture_url ? (
+                            <img src={editingOuvrage.couverture_url} alt="Aperçu" className="w-full h-full object-cover" />
+                          ) : (
+                            <ImageIcon size={18} className="text-gray-300" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={e => setCoverFile(e.target.files?.[0] || null)} 
+                            className="w-full text-xs text-gray-600 file:mr-2 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-white file:text-gray-700 file:border file:border-gray-200 hover:file:bg-gray-100 cursor-pointer" 
+                          />
+                          <p className="text-[10px] text-gray-400 mt-1 truncate">PNG, JPG ou WebP</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Boîte Extrait PDF */}
+                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                          <BookText size={14} className="text-bordeaux" />
+                          Extrait à feuilleter (PDF)
+                        </label>
+                        {(extractFile || editingOuvrage?.extrait_url) && (
+                          <span className="text-[10px] text-green-700 bg-green-100 font-bold px-1.5 py-0.5 rounded">
+                            {extractFile ? 'Nouveau PDF' : 'Extrait présent'}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <input 
+                        type="file" 
+                        accept="application/pdf" 
+                        onChange={e => setExtractFile(e.target.files?.[0] || null)} 
+                        className="w-full text-xs text-gray-600 file:mr-2 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-white file:text-gray-700 file:border file:border-gray-200 hover:file:bg-gray-100 cursor-pointer" 
+                      />
+                      <p className="text-[10px] text-gray-400">Permet aux parents et enseignants de feuilleter quelques pages.</p>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
 
-              <div className="pt-4 flex justify-end gap-2 border-t">
+              {/* Footer Sticky */}
+              <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between shrink-0">
+                <span className="text-[11px] text-gray-400 hidden sm:inline">
+                  <span className="text-bordeaux font-bold">*</span> Champs obligatoires
+                </span>
+                <div className="flex items-center gap-2 ml-auto">
+                  <button 
+                    type="button" 
+                    onClick={() => setIsOuvrageModalOpen(false)} 
+                    className="px-4 py-2 text-xs font-medium border border-gray-300 rounded-lg hover:bg-white text-gray-700 transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button 
+                    type="submit" 
+                    disabled={saving} 
+                    className="px-5 py-2 text-xs font-medium bg-bordeaux text-white rounded-lg hover:bg-bordeaux-light transition-colors disabled:opacity-50 flex items-center gap-1.5 shadow-xs"
+                  >
+                    {saving && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
+                    {saving ? 'Enregistrement...' : 'Enregistrer l\'ouvrage'}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Partenaire Modal */}
+      {isPartenaireModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            <div className="px-5 py-3.5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70 shrink-0">
+              <h3 className="text-base font-bold text-anthracite">
+                {editingPartenaire?.id ? 'Modifier le Partenaire' : 'Nouveau Partenaire'}
+              </h3>
+              <button 
+                onClick={() => setIsPartenaireModalOpen(false)} 
+                className="text-gray-400 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <form onSubmit={handleSavePartenaire} className="flex flex-col flex-1 min-h-0">
+              <div className="p-5 overflow-y-auto flex-1 space-y-3.5 text-sm">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nom de l'établissement *</label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={editingPartenaire?.nom || ''} 
+                    onChange={e => setEditingPartenaire({...editingPartenaire, nom: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    placeholder="ex: Librairie de France" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Adresse (Localisation)</label>
+                  <textarea 
+                    value={editingPartenaire?.adresse || ''} 
+                    onChange={e => setEditingPartenaire({...editingPartenaire, adresse: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    rows={2} 
+                    placeholder="ex: Abidjan, Plateau..." 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Contact</label>
+                  <input 
+                    type="text" 
+                    value={editingPartenaire?.contact || ''} 
+                    onChange={e => setEditingPartenaire({...editingPartenaire, contact: e.target.value})} 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    placeholder="ex: +225 0102030405" 
+                  />
+                </div>
+              </div>
+              <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex justify-end gap-2 shrink-0">
                 <button 
                   type="button" 
-                  onClick={() => setIsRessourceModalOpen(false)} 
-                  className="px-4 py-2 border rounded hover:bg-gray-50"
+                  onClick={() => setIsPartenaireModalOpen(false)} 
+                  className="px-4 py-2 text-xs font-medium border border-gray-300 rounded-lg hover:bg-white text-gray-700 transition-colors"
                 >
                   Annuler
                 </button>
                 <button 
                   type="submit" 
                   disabled={saving} 
-                  className="px-6 py-2 bg-bordeaux text-white rounded hover:bg-bordeaux/90 disabled:opacity-50 flex items-center gap-2"
+                  className="px-4 py-2 text-xs font-medium bg-bordeaux text-white rounded-lg hover:bg-bordeaux-light transition-colors disabled:opacity-50"
                 >
-                  {saving && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
                   {saving ? 'Enregistrement...' : 'Enregistrer'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Ressource / Document Modal */}
+      {isRessourceModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            {/* Header Sticky */}
+            <div className="px-5 py-3.5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70 shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-bordeaux/10 text-bordeaux rounded-lg">
+                  <FileText size={18} />
+                </div>
+                <h3 className="text-base font-bold text-anthracite">
+                  {editingRessource?.id ? 'Modifier le Document / Ressource' : 'Ajouter un Document Pédagogique'}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setIsRessourceModalOpen(false)} 
+                className="text-gray-400 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Scrollable Form Body */}
+            <form onSubmit={handleSaveRessource} className="flex flex-col flex-1 min-h-0">
+              <div className="p-5 overflow-y-auto flex-1 space-y-3.5 text-sm">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Titre du document *
+                  </label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={editingRessource?.titre || ''} 
+                    onChange={e => setEditingRessource({...editingRessource, titre: e.target.value})} 
+                    className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                    placeholder="ex: Fiche d'exercices - Les Fonctions numériques" 
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Type de document *
+                    </label>
+                    <select 
+                      required 
+                      value={editingRessource?.type || 'Fiche de cours'} 
+                      onChange={e => setEditingRessource({...editingRessource, type: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux"
+                    >
+                      <option value="Fiche de cours">Fiche de cours</option>
+                      <option value="Corrigé">Corrigé</option>
+                      <option value="Exercices">Exercices</option>
+                      <option value="Guide pédagogique">Guide pédagogique</option>
+                      <option value="Extrait">Extrait</option>
+                      <option value="Document complémentaire">Document complémentaire</option>
+                      <option value="Autre">Autre</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Format du document
+                    </label>
+                    <select 
+                      value={editingRessource?.format || 'PDF'} 
+                      onChange={e => setEditingRessource({...editingRessource, format: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux"
+                    >
+                      <option value="PDF">PDF</option>
+                      <option value="Word">Word (.docx)</option>
+                      <option value="Excel">Excel (.xlsx)</option>
+                      <option value="PowerPoint">PowerPoint (.pptx)</option>
+                      <option value="Audio">Audio (MP3)</option>
+                      <option value="Vidéo">Vidéo</option>
+                      <option value="Lien">Lien externe</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Matière
+                    </label>
+                    <select 
+                      value={editingRessource?.matiere || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, matiere: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux"
+                    >
+                      <option value="">-- Sans matière --</option>
+                      {matieres.map(m => (
+                        <option key={m.id} value={m.nom}>{m.nom}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Niveau scolaire
+                    </label>
+                    <input 
+                      type="text" 
+                      value={editingRessource?.niveau || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, niveau: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                      placeholder="ex: 6e, 3e, Terminale..." 
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Ouvrage lié (optionnel)
+                    </label>
+                    <select 
+                      value={editingRessource?.ouvrage_id || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, ouvrage_id: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux truncate"
+                    >
+                      <option value="">-- Aucun ouvrage lié --</option>
+                      {ouvrages.map(o => (
+                        <option key={o.id} value={o.id}>{o.titre}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Collection liée (optionnel)
+                    </label>
+                    <select 
+                      value={editingRessource?.collection_id || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, collection_id: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux truncate"
+                    >
+                      <option value="">-- Aucune collection liée --</option>
+                      {collections.map(c => (
+                        <option key={c.id} value={c.id}>{c.nom}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-gray-50 border border-gray-200 rounded-xl space-y-2.5">
+                  <h4 className="font-bold text-xs text-anthracite uppercase tracking-wide">
+                    Fichier ou Lien d'accès au document *
+                  </h4>
+                  
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      Option A : Téléverser le fichier (PDF, Word, etc.)
+                    </label>
+                    <input 
+                      type="file" 
+                      onChange={e => {
+                        if (e.target.files && e.target.files[0]) {
+                          setRessourceFile(e.target.files[0]);
+                        }
+                      }} 
+                      className="w-full text-xs text-gray-600 file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-bordeaux/10 file:text-bordeaux hover:file:bg-bordeaux/20"
+                    />
+                    {ressourceFile && (
+                      <p className="text-xs text-green-600 mt-1 font-medium">✓ Sélectionné : {ressourceFile.name}</p>
+                    )}
+                  </div>
+
+                  <div className="relative flex py-0.5 items-center">
+                    <div className="flex-grow border-t border-gray-200"></div>
+                    <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase">OU</span>
+                    <div className="flex-grow border-t border-gray-200"></div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      Option B : Lien externe (Google Drive, OneDrive...)
+                    </label>
+                    <input 
+                      type="url" 
+                      value={editingRessource?.google_drive_url || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, google_drive_url: e.target.value})} 
+                      className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
+                      placeholder="https://drive.google.com/file/d/..." 
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-1">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                    <input 
+                      type="checkbox" 
+                      checked={editingRessource?.publie ?? true} 
+                      onChange={e => setEditingRessource({...editingRessource, publie: e.target.checked})} 
+                      className="rounded text-bordeaux focus:ring-bordeaux w-4 h-4" 
+                    />
+                    <span className="text-xs font-medium text-gray-700">Publier ce document immédiatement sur le site</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Footer Sticky */}
+              <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex justify-end gap-2 shrink-0">
+                <button 
+                  type="button" 
+                  onClick={() => setIsRessourceModalOpen(false)} 
+                  className="px-4 py-2 text-xs font-medium border border-gray-300 rounded-lg hover:bg-white text-gray-700 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={saving} 
+                  className="px-5 py-2 text-xs font-medium bg-bordeaux text-white rounded-lg hover:bg-bordeaux-light transition-colors disabled:opacity-50 flex items-center gap-1.5 shadow-xs"
+                >
+                  {saving && <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
+                  {saving ? 'Enregistrement...' : 'Enregistrer le document'}
                 </button>
               </div>
             </form>

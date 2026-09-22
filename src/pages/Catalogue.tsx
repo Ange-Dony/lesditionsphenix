@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { Collection, Ouvrage } from '../types';
-import { BookOpen, Search, Filter, BookText, Eye, X, ShoppingBag } from 'lucide-react';
+import { BookOpen, Search, Filter, BookText, Eye, X, ShoppingBag, Share2, Check, MessageCircle, ArrowLeft } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { PDFViewer } from '../components/PDFViewer';
 import { useCart } from '../context/CartContext';
@@ -11,17 +11,22 @@ import { SEOHead } from '../components/SEOHead';
 
 export function Catalogue() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialOuvrageId = searchParams.get('ouvrage');
+  const { id: paramBookId } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
+
+  const initialOuvrageId = paramBookId || searchParams.get('ouvrage');
   const initialCollectionId = searchParams.get('collection');
+  const initialSearchParam = searchParams.get('search') || searchParams.get('q') || '';
   
   const [collections, setCollections] = useState<Collection[]>([]);
   const [ouvrages, setOuvrages] = useState<Ouvrage[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCollection, setSelectedCollection] = useState<string>(initialCollectionId || 'all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialSearchParam);
   
   const [selectedOuvrage, setSelectedOuvrage] = useState<Ouvrage | null>(null);
   const [isPdfOpen, setIsPdfOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   
   const { addToCart } = useCart();
 
@@ -48,7 +53,7 @@ export function Catalogue() {
           
           // Open detail modal if ouvrage ID is in URL
           if (initialOuvrageId) {
-            const ouv = ouvRes.data.find(o => o.id === initialOuvrageId);
+            const ouv = sorted.find(o => o.id === initialOuvrageId);
             if (ouv) setSelectedOuvrage(ouv);
           }
         }
@@ -68,35 +73,111 @@ export function Catalogue() {
     }
   }, [initialCollectionId]);
 
+  const openOuvrage = (ouvrage: Ouvrage) => {
+    setSelectedOuvrage(ouvrage);
+    setCopiedLink(false);
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('ouvrage', ouvrage.id);
+      return next;
+    }, { replace: false });
+  };
+
+  const closeOuvrage = () => {
+    setSelectedOuvrage(null);
+    setCopiedLink(false);
+    if (paramBookId) {
+      navigate('/catalogue');
+    } else {
+      setSearchParams(prev => {
+        const next = new URLSearchParams(prev);
+        next.delete('ouvrage');
+        return next;
+      }, { replace: true });
+    }
+  };
+
+  const handleCopyLink = (ouvrage: Ouvrage) => {
+    const url = `https://www.leseditionsphenix.com/catalogue?ouvrage=${ouvrage.id}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2500);
+      });
+    }
+  };
+
   const filteredOuvrages = ouvrages.filter(ouv => {
     const matchesCollection = selectedCollection === 'all' || ouv.collection_id === selectedCollection;
     const matchesSearch = ouv.titre.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          ouv.auteur.toLowerCase().includes(searchQuery.toLowerCase());
+                          ouv.auteur.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (ouv.matiere && ouv.matiere.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                          (ouv.niveau && ouv.niveau.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCollection && matchesSearch;
   });
 
   const handleOrder = (ouvrage: Ouvrage) => {
     addToCart(ouvrage);
-    setSelectedOuvrage(null); // Optional: close modal on add to cart
   };
 
   const activeColName = collections.find(c => c.id === selectedCollection)?.nom;
-  const seoTitle = activeColName 
+
+  const seoTitle = selectedOuvrage
+    ? `${selectedOuvrage.titre} – Les Éditions Phénix | Manuel Scolaire Ivoirien`
+    : activeColName 
     ? `${activeColName} – Manuels Scolaires Ivoiriens | Catalogue`
     : searchQuery 
     ? `Recherche "${searchQuery}" – Catalogue Manuels & Annales`
     : "Catalogue des Manuels Scolaires Ivoiriens, Annales & Citations";
 
-  const seoDescription = activeColName
+  const seoDescription = selectedOuvrage
+    ? (selectedOuvrage.description ? selectedOuvrage.description.replace(/[\n\r]+/g, ' ').slice(0, 160) : `${selectedOuvrage.titre} - Manuel scolaire officiel pour ${selectedOuvrage.niveau ? selectedOuvrage.niveau.trim() : 'élèves'} en ${selectedOuvrage.matiere || 'Côte d\'Ivoire'}, édité par Les Éditions Phénix. Sommaire, fiches et commandes.`)
+    : activeColName
     ? `Consultez les ouvrages de la ${activeColName} des Éditions Phénix : manuels ivoiriens, exercices et fiches conformes aux programmes officiels en Côte d'Ivoire.`
     : "Catalogue officiel des Éditions Phénix : manuels scolaires ivoiriens agréés, annales BEPC & BAC, construction graphique, fiches de citations philosophiques et littérature.";
+
+  const seoKeywords = selectedOuvrage
+    ? `${selectedOuvrage.titre}, ${selectedOuvrage.matiere || ''}, ${selectedOuvrage.niveau || ''}, ${selectedOuvrage.collections?.nom || ''}, manuels scolaires côte d'ivoire, les éditions phénix`
+    : undefined;
+
+  const bookJsonLd = selectedOuvrage ? {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "@id": `https://www.leseditionsphenix.com/catalogue?ouvrage=${selectedOuvrage.id}#book`,
+    "name": selectedOuvrage.titre,
+    "url": `https://www.leseditionsphenix.com/catalogue?ouvrage=${selectedOuvrage.id}`,
+    "image": selectedOuvrage.couverture_url || undefined,
+    "author": {
+      "@type": "Organization",
+      "name": (selectedOuvrage.auteur && selectedOuvrage.auteur.trim()) ? selectedOuvrage.auteur.trim() : "Les Éditions Phénix"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Les Éditions Phénix",
+      "url": "https://www.leseditionsphenix.com"
+    },
+    "inLanguage": "fr-CI",
+    "about": selectedOuvrage.matiere || "Enseignement scolaire en Côte d'Ivoire",
+    "educationalLevel": selectedOuvrage.niveau ? selectedOuvrage.niveau.trim() : "Collège / Lycée Côte d'Ivoire",
+    "offers": {
+      "@type": "Offer",
+      "price": selectedOuvrage.prix || 0,
+      "priceCurrency": "XOF",
+      "availability": selectedOuvrage.disponibilite !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "url": `https://www.leseditionsphenix.com/catalogue?ouvrage=${selectedOuvrage.id}`
+    }
+  } : undefined;
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SEOHead 
         title={seoTitle}
         description={seoDescription}
-        keywords="catalogue manuels ivoiriens, annales bepc, annales bac, construction graphique, citations philosophiques, livres scolaires côte d'ivoire, livre abidjan"
+        keywords={seoKeywords || "catalogue manuels ivoiriens, annales bepc, annales bac, construction graphique, citations philosophiques, livres scolaires côte d'ivoire, livre abidjan"}
+        canonical={selectedOuvrage ? `https://www.leseditionsphenix.com/catalogue?ouvrage=${selectedOuvrage.id}` : undefined}
+        ogType={selectedOuvrage ? "book" : "website"}
+        ogImage={selectedOuvrage?.couverture_url || undefined}
+        jsonLd={bookJsonLd}
       />
       
       {/* Header & Filters with Blue & Yellow Accents */}
@@ -212,7 +293,7 @@ export function Catalogue() {
             <div 
               key={ouvrage.id} 
               className="group flex flex-col bg-white rounded-2xl shadow-xs hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200/80 hover:border-bordeaux/30 cursor-pointer"
-              onClick={() => setSelectedOuvrage(ouvrage)}
+              onClick={() => openOuvrage(ouvrage)}
             >
               <div className="aspect-[3/4] w-full bg-ivoire-warm relative overflow-hidden flex items-center justify-center p-4">
                 {/* Book spine shadow */}
@@ -288,8 +369,14 @@ export function Catalogue() {
 
       {/* Modal Détail Ouvrage */}
       {selectedOuvrage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 sm:p-6">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl border border-gray-200 animate-in fade-in zoom-in-95 duration-200">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 sm:p-6"
+          onClick={closeOuvrage}
+        >
+          <div 
+            className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl border border-gray-200 animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex flex-col md:flex-row">
               {/* Image Col */}
               <div className="w-full md:w-5/12 bg-ivoire-warm p-8 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200/80 relative">
@@ -310,7 +397,7 @@ export function Catalogue() {
               {/* Content Col */}
               <div className="w-full md:w-7/12 p-6 sm:p-8 relative flex flex-col">
                 <button 
-                  onClick={() => setSelectedOuvrage(null)}
+                  onClick={closeOuvrage}
                   className="absolute top-4 right-4 p-2 text-gray-400 hover:text-anthracite hover:bg-gray-100 rounded-full transition-colors"
                   aria-label="Fermer"
                 >
@@ -382,6 +469,39 @@ export function Catalogue() {
                       <span className="font-semibold text-anthracite">{selectedOuvrage.nombre_pages} pages</span>
                     </div>
                   )}
+                </div>
+
+                {/* Share & Direct Link for SEO */}
+                <div className="flex items-center justify-between gap-2 p-3 mb-6 rounded-xl bg-gray-50 border border-gray-200/70 text-xs">
+                  <span className="text-anthracite-muted font-medium flex items-center gap-1.5">
+                    <Share2 size={14} className="text-bordeaux" /> Partager cette fiche :
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <a 
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Retrouvez le manuel scolaire "${selectedOuvrage.titre}" sur le site officiel des Éditions Phénix : https://www.leseditionsphenix.com/catalogue?ouvrage=${selectedOuvrage.id}`)}`}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1.5 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#128C7E] font-medium rounded-lg transition-colors flex items-center gap-1"
+                      title="Partager sur WhatsApp"
+                    >
+                      <MessageCircle size={14} />
+                      <span>WhatsApp</span>
+                    </a>
+                    <button 
+                      onClick={() => handleCopyLink(selectedOuvrage)}
+                      className="px-2.5 py-1.5 bg-white hover:bg-gray-100 text-anthracite border border-gray-200 font-medium rounded-lg transition-colors flex items-center gap-1 shadow-2xs"
+                      title="Copier le lien direct vers cet ouvrage"
+                    >
+                      {copiedLink ? (
+                        <>
+                          <Check size={14} className="text-green-600" />
+                          <span className="text-green-600 font-semibold">Copié !</span>
+                        </>
+                      ) : (
+                        <span>Copier le lien</span>
+                      )}
+                    </button>
+                  </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100 mt-auto">

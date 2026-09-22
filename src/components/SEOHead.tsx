@@ -8,6 +8,7 @@ interface SEOHeadProps {
   canonical?: string;
   ogType?: string;
   ogImage?: string;
+  jsonLd?: Record<string, any> | Array<Record<string, any>>;
 }
 
 const DEFAULT_TITLE = "Les Éditions Phénix | La Maison du Succès – Manuels Scolaires Ivoiriens, Annales & Citations";
@@ -23,6 +24,7 @@ export function SEOHead({
   canonical,
   ogType = "website",
   ogImage = DEFAULT_IMAGE,
+  jsonLd,
 }: SEOHeadProps) {
   const location = useLocation();
 
@@ -75,7 +77,28 @@ export function SEOHead({
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.href = currentUrl;
-  }, [title, description, keywords, canonical, ogType, ogImage, location]);
+
+    // Dynamic JSON-LD structured data
+    const existingScript = document.getElementById('dynamic-page-jsonld');
+    if (jsonLd) {
+      const script = (existingScript || document.createElement('script')) as HTMLScriptElement;
+      script.id = 'dynamic-page-jsonld';
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(jsonLd);
+      if (!existingScript) {
+        document.head.appendChild(script);
+      }
+    } else if (existingScript) {
+      existingScript.remove();
+    }
+
+    return () => {
+      const scriptToRemove = document.getElementById('dynamic-page-jsonld');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+      }
+    };
+  }, [title, description, keywords, canonical, ogType, ogImage, jsonLd, location]);
 
   return null;
 }

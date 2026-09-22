@@ -53,121 +53,949 @@
 
     <!-- Schema.org Rich Structured Data (JSON-LD) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": [
+        "Organization",
+        "PublishingHouse"
+      ],
+      "@id": "https://www.leseditionsphenix.com/#organization",
+      "name": "Les Éditions Phénix",
+      "alternateName": [
+        "La Maison du Succès",
+        "Éditions Phénix",
+        "Editions Phenix",
+        "Maison d'édition ivoirienne Les Éditions Phénix"
+      ],
+      "url": "https://www.leseditionsphenix.com",
+      "logo": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/logos/kaar8xq0bf9_1789583134311.png",
+      "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/logos/kaar8xq0bf9_1789583134311.png",
+      "description": "Maison d'édition ivoirienne de référence en Côte d'Ivoire, spécialisée dans la publication de manuels scolaires ivoiriens, annales d'examens (BEPC et BAC), ouvrages de construction graphique, recueils de citations philosophiques et littérature d'excellence.",
+      "slogan": "La Maison du Succès – Renaître par le savoir",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Abidjan-Yopougon-Sogefiha solic 2",
+        "addressLocality": "Abidjan",
+        "addressRegion": "Abidjan",
+        "addressCountry": "CI"
+      },
+      "telephone": "+2250718784093",
+      "priceRange": "1000 - 15000 XOF",
+      "areaServed": [
         {
-          "@type": ["Organization", "PublishingHouse"],
-          "@id": "https://www.leseditionsphenix.com/#organization",
-          "name": "Les Éditions Phénix",
-          "alternateName": [
-            "La Maison du Succès",
-            "Éditions Phénix",
-            "Editions Phenix",
-            "Maison d'édition ivoirienne Les Éditions Phénix"
-          ],
-          "url": "https://www.leseditionsphenix.com",
-          "logo": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/logos/kaar8xq0bf9_1789583134311.png",
-          "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/logos/kaar8xq0bf9_1789583134311.png",
-          "description": "Maison d'édition ivoirienne de référence en Côte d'Ivoire, spécialisée dans la publication de manuels scolaires ivoiriens, annales d'examens (BEPC et BAC), ouvrages de construction graphique, recueils de citations philosophiques et littérature d'excellence.",
-          "slogan": "La Maison du Succès – Renaître par le savoir",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Abidjan-Yopougon-Sogefiha solic 2",
-            "addressLocality": "Abidjan",
-            "addressRegion": "Abidjan",
-            "addressCountry": "CI"
-          },
-          "telephone": "+2250718784093",
-          "priceRange": "1000 - 15000 XOF",
-          "areaServed": [
-            { "@type": "Country", "name": "Côte d'Ivoire" },
-            { "@type": "AdministrativeArea", "name": "Abidjan" }
-          ],
-          "knowsAbout": [
-            "Manuels scolaires ivoiriens",
-            "Annales BEPC et BAC Côte d'Ivoire",
-            "Construction graphique et géométrie",
-            "Citations philosophiques et dissertation",
-            "Éducation aux Droits de l'Homme et à la Citoyenneté (EDHC)",
-            "Connaissance du Monde Contemporain (CMC)",
-            "Histoire-Géographie Côte d'Ivoire",
-            "Anglais et épreuves orales du BEPC et BAC",
-            "Français et dictée-questions"
-          ]
+          "@type": "Country",
+          "name": "Côte d'Ivoire"
         },
         {
-          "@type": "WebSite",
-          "@id": "https://www.leseditionsphenix.com/#website",
-          "url": "https://www.leseditionsphenix.com",
-          "name": "Les Éditions Phénix - La Maison du Succès",
-          "description": "Portail officiel de la maison d'édition ivoirienne Les Éditions Phénix : catalogue complet de manuels scolaires ivoiriens, annales d'examens, fiches de révision et ressources pour enseignants et élèves.",
-          "publisher": {
-            "@id": "https://www.leseditionsphenix.com/#organization"
-          },
-          "inLanguage": "fr-CI",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://www.leseditionsphenix.com/catalogue?search={search_term_string}"
+          "@type": "AdministrativeArea",
+          "name": "Abidjan"
+        }
+      ],
+      "knowsAbout": [
+        "Manuels scolaires ivoiriens",
+        "Annales BEPC et BAC Côte d'Ivoire",
+        "Construction graphique et géométrie",
+        "Citations philosophiques et dissertation",
+        "Éducation aux Droits de l'Homme et à la Citoyenneté (EDHC)",
+        "Connaissance du Monde Contemporain (CMC)",
+        "Histoire-Géographie Côte d'Ivoire",
+        "Anglais et épreuves orales du BEPC et BAC",
+        "Français et dictée-questions"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.leseditionsphenix.com/#website",
+      "url": "https://www.leseditionsphenix.com",
+      "name": "Les Éditions Phénix - La Maison du Succès",
+      "description": "Portail officiel de la maison d'édition ivoirienne Les Éditions Phénix : catalogue complet de manuels scolaires ivoiriens, annales d'examens, fiches de révision et ressources pour enseignants et élèves.",
+      "publisher": {
+        "@id": "https://www.leseditionsphenix.com/#organization"
+      },
+      "inLanguage": "fr-CI",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.leseditionsphenix.com/catalogue?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.leseditionsphenix.com/#collections",
+      "name": "Nos 7 Collections Éditoriales Pédagogiques",
+      "description": "Collections d'ouvrages scolaires et parascolaires conformes aux programmes officiels de l'Éducation Nationale en Côte d'Ivoire.",
+      "numberOfItems": 7,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Collection Archives (Histoire & Géographie)",
+          "description": "Manuels et activités d'évaluation d'Histoire-Géographie de la 6e à la Terminale."
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Collection École et Métiers (CMC)",
+          "description": "Cours et activités de Connaissance du Monde Contemporain de la 2nde à la Terminale."
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Collection Jeunes Citoyens (EDHC)",
+          "description": "Activités d'évaluation d'Éducation aux Droits de l'Homme et à la Citoyenneté de la 6e à la 3e."
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Collection Succès (Annales, Citations & Construction Graphique)",
+          "description": "Annales Code d'accès (HG, Philo, PC), Le secret des citations philosophiques et Le secret des graphiques."
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Collection Polyglotte (Langues vivantes & Anglais)",
+          "description": "L'Oral sans peine Anglais BEPC et BAC, Le Writing sans peine, Initiation à l'anglais."
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Collection Racines (Français & Méthodologie)",
+          "description": "Les codes de la Dictée-Questions réussie CM1/CM2 et guides méthodologiques de langue française."
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Collection Papyrus (Littérature & Théâtre)",
+          "description": "Grandes œuvres du patrimoine littéraire, théâtre et poésie."
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.leseditionsphenix.com/#ouvrages-scolaires",
+      "name": "Manuels Scolaires Ivoiriens, Annales BEPC/BAC & Ouvrages Pédagogiques",
+      "description": "Catalogue complet des manuels et annales édités par Les Éditions Phénix en Côte d'Ivoire.",
+      "numberOfItems": 27,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=8aa1f44c-035a-4753-954f-0e700315afcf#book",
+            "name": "Activités d'évaluation HG 6e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=8aa1f44c-035a-4753-954f-0e700315afcf",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/ue2h1a03uzd_1789579752115.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
             },
-            "query-input": "required name=search_term_string"
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Connaissance du Monde Contemporain",
+            "educationalLevel": "Sixième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=8aa1f44c-035a-4753-954f-0e700315afcf"
+            }
           }
         },
         {
-          "@type": "ItemList",
-          "@id": "https://www.leseditionsphenix.com/#collections",
-          "name": "Nos 7 Collections Éditoriales Pédagogiques",
-          "description": "Collections d'ouvrages scolaires et parascolaires conformes aux programmes officiels de l'Éducation Nationale en Côte d'Ivoire.",
-          "numberOfItems": 7,
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Collection Archives (Histoire & Géographie)",
-              "description": "Manuels et activités d'évaluation d'Histoire-Géographie de la 6e à la Terminale."
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=f04949ed-fed6-4985-b831-eefea4d2210c#book",
+            "name": "Activités d'évaluation HG 5e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=f04949ed-fed6-4985-b831-eefea4d2210c",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/ez4l0tckjp_1789596388128.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
             },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Collection École et Métiers (CMC)",
-              "description": "Cours et activités de Connaissance du Monde Contemporain de la 2nde à la Terminale."
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
             },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "Collection Jeunes Citoyens (EDHC)",
-              "description": "Activités d'évaluation d'Éducation aux Droits de l'Homme et à la Citoyenneté de la 6e à la 3e."
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "name": "Collection Succès (Annales, Citations & Construction Graphique)",
-              "description": "Annales Code d'accès (HG, Philo, PC), Le secret des citations philosophiques et Le secret des graphiques."
-            },
-            {
-              "@type": "ListItem",
-              "position": 5,
-              "name": "Collection Polyglotte (Langues vivantes & Anglais)",
-              "description": "L'Oral sans peine Anglais BEPC et BAC, Le Writing sans peine, Initiation à l'anglais."
-            },
-            {
-              "@type": "ListItem",
-              "position": 6,
-              "name": "Collection Racines (Français & Méthodologie)",
-              "description": "Les codes de la Dictée-Questions réussie CM1/CM2 et guides méthodologiques de langue française."
-            },
-            {
-              "@type": "ListItem",
-              "position": 7,
-              "name": "Collection Papyrus (Littérature & Théâtre)",
-              "description": "Grandes œuvres du patrimoine littéraire, théâtre et poésie."
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Cinquième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=f04949ed-fed6-4985-b831-eefea4d2210c"
             }
-          ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=87781338-4dd7-41f8-8ff4-58e4f2eb7d37#book",
+            "name": "Activités d'évaluation HG 4e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=87781338-4dd7-41f8-8ff4-58e4f2eb7d37",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/o792otnztt_1789623820956.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Quatrième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=87781338-4dd7-41f8-8ff4-58e4f2eb7d37"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=21a97172-547a-403c-a99b-fdc55edfb266#book",
+            "name": "Activités d'évaluation HG 3e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=21a97172-547a-403c-a99b-fdc55edfb266",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/44mabfmlyu4_1789624096912.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Troisième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=21a97172-547a-403c-a99b-fdc55edfb266"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=6ce3ac86-826d-41b7-ae80-f5b70058c662#book",
+            "name": "Activités d'évaluation HG 2nde",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=6ce3ac86-826d-41b7-ae80-f5b70058c662",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/4pbvtnwtpft_1789626427466.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Seconde",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=6ce3ac86-826d-41b7-ae80-f5b70058c662"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=bab41a8d-0433-47f3-b938-ddd436c6f176#book",
+            "name": "Activités d'évaluation HG 1ère",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=bab41a8d-0433-47f3-b938-ddd436c6f176",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/vb7rdinmdh_1789626489423.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Première",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=bab41a8d-0433-47f3-b938-ddd436c6f176"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=4c0ca083-4190-4a26-825f-ebeb96315cc2#book",
+            "name": "Activités d'évaluation HG Tle ",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=4c0ca083-4190-4a26-825f-ebeb96315cc2",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/oga7yqd1mar_1789627796547.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=4c0ca083-4190-4a26-825f-ebeb96315cc2"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=81834041-1a1a-4154-b778-4e924304c8ca#book",
+            "name": "Cours et Activités CMC 2nde",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=81834041-1a1a-4154-b778-4e924304c8ca",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/ea6b54f6vpg_1789629602156.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Connaissance du Monde Contemporain",
+            "educationalLevel": "Seconde",
+            "offers": {
+              "@type": "Offer",
+              "price": 3500,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=81834041-1a1a-4154-b778-4e924304c8ca"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=65ce8d84-e008-409c-affd-288cf39f3f5e#book",
+            "name": "Cours et Activités CMC 1ère",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=65ce8d84-e008-409c-affd-288cf39f3f5e",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/isdbibp134d_1789629695489.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Connaissance du Monde Contemporain",
+            "educationalLevel": "Première",
+            "offers": {
+              "@type": "Offer",
+              "price": 3500,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=65ce8d84-e008-409c-affd-288cf39f3f5e"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=f38c9324-fa93-439f-8193-b53bb7bbf7ae#book",
+            "name": "Cours et Activités CMC Tle",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=f38c9324-fa93-439f-8193-b53bb7bbf7ae",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/exhw1irvhhc_1789629755862.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Connaissance du Monde Contemporain",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 3500,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=f38c9324-fa93-439f-8193-b53bb7bbf7ae"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=57892a19-ed41-4be1-a1fc-41ed327b304e#book",
+            "name": "Activités d'évaluation EDHC 6e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=57892a19-ed41-4be1-a1fc-41ed327b304e",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/59xqmpz0uuo_1789630331442.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "EDHC",
+            "educationalLevel": "Sixième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=57892a19-ed41-4be1-a1fc-41ed327b304e"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=7a76a543-40da-40c7-9c72-86ec0692fd26#book",
+            "name": "Activités d'évaluation EDHC 5e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=7a76a543-40da-40c7-9c72-86ec0692fd26",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/wqieg26ssjr_1789630505810.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "EDHC",
+            "educationalLevel": "Cinquième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=7a76a543-40da-40c7-9c72-86ec0692fd26"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=7f64e99a-4013-4cda-aaf0-ec7afc996397#book",
+            "name": "Activités d'évaluation EDHC 4e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=7f64e99a-4013-4cda-aaf0-ec7afc996397",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/uew5fnjoxhg_1789630768938.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "EDHC",
+            "educationalLevel": "Quatrième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=7f64e99a-4013-4cda-aaf0-ec7afc996397"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=0f97d0ec-7aba-4416-9a3b-49f87a29951b#book",
+            "name": "Activités d'évaluation EDHC 3e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=0f97d0ec-7aba-4416-9a3b-49f87a29951b",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/l02q5l16j9k_1789630833203.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "EDHC",
+            "educationalLevel": "Troisième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=0f97d0ec-7aba-4416-9a3b-49f87a29951b"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=19da6afa-85c4-4ea0-af10-bf2672a7b656#book",
+            "name": "Code d'accès - Annale HG 3e ",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=19da6afa-85c4-4ea0-af10-bf2672a7b656",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/ozmzalebdmk_1789631259472.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Troisième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=19da6afa-85c4-4ea0-af10-bf2672a7b656"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=b0e245a2-d946-4164-9079-ad5167cd367e#book",
+            "name": "Code d'accès - Annale HG Tle ",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=b0e245a2-d946-4164-9079-ad5167cd367e",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/6irlipaz41t_1789631319722.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=b0e245a2-d946-4164-9079-ad5167cd367e"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=3f470e31-0b4a-4a75-ac2c-6804572be3ee#book",
+            "name": "Code d'accès - Annale Philo Tle",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=3f470e31-0b4a-4a75-ac2c-6804572be3ee",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/kla9fan0lmd_1789631743366.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Philosophie",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=3f470e31-0b4a-4a75-ac2c-6804572be3ee"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=cb206849-6bba-41a8-8178-d17ebcec77cb#book",
+            "name": "Le secret des citations 1ère et Tle",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=cb206849-6bba-41a8-8178-d17ebcec77cb",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/4rmb26zep4m_1789631990798.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Philosophie",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=cb206849-6bba-41a8-8178-d17ebcec77cb"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=43500394-daa0-4242-8fc7-df909cf25937#book",
+            "name": "Le secret des graphiques ",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=43500394-daa0-4242-8fc7-df909cf25937",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/j1kuv8j5pv_1789632403770.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Histoire-Géographie",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2500,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=43500394-daa0-4242-8fc7-df909cf25937"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=289f9ae3-9096-469c-aed0-90a772bbc95e#book",
+            "name": "Code d'accès - Annale PC 3e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=289f9ae3-9096-469c-aed0-90a772bbc95e",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/v53285awq2b_1789632498744.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Physique-Chimie",
+            "educationalLevel": "Troisième",
+            "offers": {
+              "@type": "Offer",
+              "price": 3000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=289f9ae3-9096-469c-aed0-90a772bbc95e"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 21,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=25735120-c762-4b3d-951f-a4d563ee4b6a#book",
+            "name": "Initiation à l'Anglais 6e, 5e et 4e",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=25735120-c762-4b3d-951f-a4d563ee4b6a",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/j0u6bk79o4_1789634664813.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Anglais",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=25735120-c762-4b3d-951f-a4d563ee4b6a"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 22,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=a74305f0-288d-4a4e-b530-fdbad9adc4d6#book",
+            "name": "L'Oral sans peine - Anglais BEPC (3e)",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=a74305f0-288d-4a4e-b530-fdbad9adc4d6",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/479lg8i9okr_1789635111175.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Anglais",
+            "educationalLevel": "Troisième",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=a74305f0-288d-4a4e-b530-fdbad9adc4d6"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 23,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=e6effd67-4810-49c0-9e41-3b17211d5e5b#book",
+            "name": "L'Oral sans peine - Anglais BAC (Tle)",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=e6effd67-4810-49c0-9e41-3b17211d5e5b",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/24vgc6gyn4v_1789635234061.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Anglais",
+            "educationalLevel": "Terminale",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=e6effd67-4810-49c0-9e41-3b17211d5e5b"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 24,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=456e5c6b-ae86-46bb-9293-496874f96a66#book",
+            "name": "Le Writing sans peine - Anglais ",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=456e5c6b-ae86-46bb-9293-496874f96a66",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/45ujv8ztdxx_1789635450304.png",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Anglais",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=456e5c6b-ae86-46bb-9293-496874f96a66"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 25,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=76597a8b-0b2f-4625-b123-4a984447f1cb#book",
+            "name": "Les codes de la Dictée-Questions réussie CM1/CM2",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=76597a8b-0b2f-4625-b123-4a984447f1cb",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/ylm3m9wvs3_1789635813122.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Français",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=76597a8b-0b2f-4625-b123-4a984447f1cb"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 26,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0#book",
+            "name": "La poule aux oeufs dort",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/qqq30ssshas_1789635944558.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Français",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 27,
+          "item": {
+            "@type": "Book",
+            "@id": "https://www.leseditionsphenix.com/catalogue?ouvrage=9b1e59e7-f9ee-4454-abfe-971a3af7cf5b#book",
+            "name": "Soir d'un monde cent têtes ni cœur",
+            "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=9b1e59e7-f9ee-4454-abfe-971a3af7cf5b",
+            "image": "https://sdkvmqvdmmypoclfivvo.supabase.co/storage/v1/object/public/medias/couvertures/tdnoridtnv_1789636083208.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Les Éditions Phénix",
+              "url": "https://www.leseditionsphenix.com"
+            },
+            "inLanguage": "fr-CI",
+            "about": "Français",
+            "educationalLevel": "Collège / Lycée Côte d'Ivoire",
+            "offers": {
+              "@type": "Offer",
+              "price": 2000,
+              "priceCurrency": "XOF",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.leseditionsphenix.com/catalogue?ouvrage=9b1e59e7-f9ee-4454-abfe-971a3af7cf5b"
+            }
+          }
         }
       ]
     }
+  ]
+}
     </script>
   </head>
   <body>
@@ -186,6 +1014,228 @@
           <a href="/partenaires">Partenaires et distributeurs</a>
         </nav>
       </header>
+      <section aria-label="Catalogue des Ouvrages et Manuels Scolaires Ivoiriens" style="display:none;" aria-hidden="true">
+        <h2>Manuels scolaires, annales d'examens et ouvrages pédagogiques agréés en Côte d'Ivoire</h2>
+        <ul>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=8aa1f44c-035a-4753-954f-0e700315afcf">Activités d'évaluation HG 6e</a></h3>
+              <p>Matière : <strong>Connaissance du Monde Contemporain</strong> | Classe / Niveau : <strong>Sixième</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 6e - Ouvrage scolaire et pédagogique pour Sixième en Connaissance du Monde Contemporain, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/8aa1f44c-035a-4753-954f-0e700315afcf">Consulter la fiche officielle de Activités d'évaluation HG 6e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=f04949ed-fed6-4985-b831-eefea4d2210c">Activités d'évaluation HG 5e</a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Cinquième</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 5e - Ouvrage scolaire et pédagogique pour Cinquième en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/f04949ed-fed6-4985-b831-eefea4d2210c">Consulter la fiche officielle de Activités d'évaluation HG 5e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=87781338-4dd7-41f8-8ff4-58e4f2eb7d37">Activités d'évaluation HG 4e</a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Quatrième</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 4e - Ouvrage scolaire et pédagogique pour Quatrième en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/87781338-4dd7-41f8-8ff4-58e4f2eb7d37">Consulter la fiche officielle de Activités d'évaluation HG 4e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=21a97172-547a-403c-a99b-fdc55edfb266">Activités d'évaluation HG 3e</a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Troisième</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 3e - Ouvrage scolaire et pédagogique pour Troisième en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/21a97172-547a-403c-a99b-fdc55edfb266">Consulter la fiche officielle de Activités d'évaluation HG 3e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=6ce3ac86-826d-41b7-ae80-f5b70058c662">Activités d'évaluation HG 2nde</a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Seconde</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 2nde - Ouvrage scolaire et pédagogique pour Seconde en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/6ce3ac86-826d-41b7-ae80-f5b70058c662">Consulter la fiche officielle de Activités d'évaluation HG 2nde</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=bab41a8d-0433-47f3-b938-ddd436c6f176">Activités d'évaluation HG 1ère</a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Première</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG 1ère - Ouvrage scolaire et pédagogique pour Première en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/bab41a8d-0433-47f3-b938-ddd436c6f176">Consulter la fiche officielle de Activités d'évaluation HG 1ère</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=4c0ca083-4190-4a26-825f-ebeb96315cc2">Activités d'évaluation HG Tle </a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection Archives</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation HG Tle  - Ouvrage scolaire et pédagogique pour Terminale en Histoire-Géographie, publié par Collection Archives aux Éditions Phénix.</p>
+              <a href="/livre/4c0ca083-4190-4a26-825f-ebeb96315cc2">Consulter la fiche officielle de Activités d'évaluation HG Tle </a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=81834041-1a1a-4154-b778-4e924304c8ca">Cours et Activités CMC 2nde</a></h3>
+              <p>Matière : <strong>Connaissance du Monde Contemporain</strong> | Classe / Niveau : <strong>Seconde</strong> | Collection : <strong>Collection École et Métiers</strong> | Prix : 3500 FCFA</p>
+              <p>Cours et Activités CMC 2nde - Ouvrage scolaire et pédagogique pour Seconde en Connaissance du Monde Contemporain, publié par Collection École et Métiers aux Éditions Phénix.</p>
+              <a href="/livre/81834041-1a1a-4154-b778-4e924304c8ca">Consulter la fiche officielle de Cours et Activités CMC 2nde</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=65ce8d84-e008-409c-affd-288cf39f3f5e">Cours et Activités CMC 1ère</a></h3>
+              <p>Matière : <strong>Connaissance du Monde Contemporain</strong> | Classe / Niveau : <strong>Première</strong> | Collection : <strong>Collection École et Métiers</strong> | Prix : 3500 FCFA</p>
+              <p>Cours et Activités CMC 1ère - Ouvrage scolaire et pédagogique pour Première en Connaissance du Monde Contemporain, publié par Collection École et Métiers aux Éditions Phénix.</p>
+              <a href="/livre/65ce8d84-e008-409c-affd-288cf39f3f5e">Consulter la fiche officielle de Cours et Activités CMC 1ère</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=f38c9324-fa93-439f-8193-b53bb7bbf7ae">Cours et Activités CMC Tle</a></h3>
+              <p>Matière : <strong>Connaissance du Monde Contemporain</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection École et Métiers</strong> | Prix : 3500 FCFA</p>
+              <p>Cours et Activités CMC Tle - Ouvrage scolaire et pédagogique pour Terminale en Connaissance du Monde Contemporain, publié par Collection École et Métiers aux Éditions Phénix.</p>
+              <a href="/livre/f38c9324-fa93-439f-8193-b53bb7bbf7ae">Consulter la fiche officielle de Cours et Activités CMC Tle</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=57892a19-ed41-4be1-a1fc-41ed327b304e">Activités d'évaluation EDHC 6e</a></h3>
+              <p>Matière : <strong>EDHC</strong> | Classe / Niveau : <strong>Sixième</strong> | Collection : <strong>Collection Jeunes Citoyens</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation EDHC 6e - Ouvrage scolaire et pédagogique pour Sixième en EDHC, publié par Collection Jeunes Citoyens aux Éditions Phénix.</p>
+              <a href="/livre/57892a19-ed41-4be1-a1fc-41ed327b304e">Consulter la fiche officielle de Activités d'évaluation EDHC 6e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=7a76a543-40da-40c7-9c72-86ec0692fd26">Activités d'évaluation EDHC 5e</a></h3>
+              <p>Matière : <strong>EDHC</strong> | Classe / Niveau : <strong>Cinquième</strong> | Collection : <strong>Collection Jeunes Citoyens</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation EDHC 5e - Ouvrage scolaire et pédagogique pour Cinquième en EDHC, publié par Collection Jeunes Citoyens aux Éditions Phénix.</p>
+              <a href="/livre/7a76a543-40da-40c7-9c72-86ec0692fd26">Consulter la fiche officielle de Activités d'évaluation EDHC 5e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=7f64e99a-4013-4cda-aaf0-ec7afc996397">Activités d'évaluation EDHC 4e</a></h3>
+              <p>Matière : <strong>EDHC</strong> | Classe / Niveau : <strong>Quatrième</strong> | Collection : <strong>Collection Jeunes Citoyens</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation EDHC 4e - Ouvrage scolaire et pédagogique pour Quatrième en EDHC, publié par Collection Jeunes Citoyens aux Éditions Phénix.</p>
+              <a href="/livre/7f64e99a-4013-4cda-aaf0-ec7afc996397">Consulter la fiche officielle de Activités d'évaluation EDHC 4e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=0f97d0ec-7aba-4416-9a3b-49f87a29951b">Activités d'évaluation EDHC 3e</a></h3>
+              <p>Matière : <strong>EDHC</strong> | Classe / Niveau : <strong>Troisième</strong> | Collection : <strong>Collection Jeunes Citoyens</strong> | Prix : 3000 FCFA</p>
+              <p>Activités d'évaluation EDHC 3e - Ouvrage scolaire et pédagogique pour Troisième en EDHC, publié par Collection Jeunes Citoyens aux Éditions Phénix.</p>
+              <a href="/livre/0f97d0ec-7aba-4416-9a3b-49f87a29951b">Consulter la fiche officielle de Activités d'évaluation EDHC 3e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=19da6afa-85c4-4ea0-af10-bf2672a7b656">Code d'accès - Annale HG 3e </a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Troisième</strong> | Collection : <strong>Collection Succès</strong> | Prix : 3000 FCFA</p>
+              <p>Code d'accès - Annale HG 3e  - Ouvrage scolaire et pédagogique pour Troisième en Histoire-Géographie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/19da6afa-85c4-4ea0-af10-bf2672a7b656">Consulter la fiche officielle de Code d'accès - Annale HG 3e </a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=b0e245a2-d946-4164-9079-ad5167cd367e">Code d'accès - Annale HG Tle </a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection Succès</strong> | Prix : 3000 FCFA</p>
+              <p>Code d'accès - Annale HG Tle  - Ouvrage scolaire et pédagogique pour Terminale en Histoire-Géographie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/b0e245a2-d946-4164-9079-ad5167cd367e">Consulter la fiche officielle de Code d'accès - Annale HG Tle </a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=3f470e31-0b4a-4a75-ac2c-6804572be3ee">Code d'accès - Annale Philo Tle</a></h3>
+              <p>Matière : <strong>Philosophie</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection Succès</strong> | Prix : 3000 FCFA</p>
+              <p>Code d'accès - Annale Philo Tle - Ouvrage scolaire et pédagogique pour Terminale en Philosophie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/3f470e31-0b4a-4a75-ac2c-6804572be3ee">Consulter la fiche officielle de Code d'accès - Annale Philo Tle</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=cb206849-6bba-41a8-8178-d17ebcec77cb">Le secret des citations 1ère et Tle</a></h3>
+              <p>Matière : <strong>Philosophie</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection Succès</strong> | Prix : 3000 FCFA</p>
+              <p>Le secret des citations 1ère et Tle - Ouvrage scolaire et pédagogique pour Terminale en Philosophie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/cb206849-6bba-41a8-8178-d17ebcec77cb">Consulter la fiche officielle de Le secret des citations 1ère et Tle</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=43500394-daa0-4242-8fc7-df909cf25937">Le secret des graphiques </a></h3>
+              <p>Matière : <strong>Histoire-Géographie</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Succès</strong> | Prix : 2500 FCFA</p>
+              <p>Le secret des graphiques  - Ouvrage scolaire et pédagogique pour élèves en Histoire-Géographie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/43500394-daa0-4242-8fc7-df909cf25937">Consulter la fiche officielle de Le secret des graphiques </a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=289f9ae3-9096-469c-aed0-90a772bbc95e">Code d'accès - Annale PC 3e</a></h3>
+              <p>Matière : <strong>Physique-Chimie</strong> | Classe / Niveau : <strong>Troisième</strong> | Collection : <strong>Collection Succès</strong> | Prix : 3000 FCFA</p>
+              <p>Code d'accès - Annale PC 3e - Ouvrage scolaire et pédagogique pour Troisième en Physique-Chimie, publié par Collection Succès aux Éditions Phénix.</p>
+              <a href="/livre/289f9ae3-9096-469c-aed0-90a772bbc95e">Consulter la fiche officielle de Code d'accès - Annale PC 3e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=25735120-c762-4b3d-951f-a4d563ee4b6a">Initiation à l'Anglais 6e, 5e et 4e</a></h3>
+              <p>Matière : <strong>Anglais</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Polyglotte</strong> | Prix : 2000 FCFA</p>
+              <p>Initiation à l'Anglais 6e, 5e et 4e - Ouvrage scolaire et pédagogique pour élèves en Anglais, publié par Collection Polyglotte aux Éditions Phénix.</p>
+              <a href="/livre/25735120-c762-4b3d-951f-a4d563ee4b6a">Consulter la fiche officielle de Initiation à l'Anglais 6e, 5e et 4e</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=a74305f0-288d-4a4e-b530-fdbad9adc4d6">L'Oral sans peine - Anglais BEPC (3e)</a></h3>
+              <p>Matière : <strong>Anglais</strong> | Classe / Niveau : <strong>Troisième</strong> | Collection : <strong>Collection Polyglotte</strong> | Prix : 2000 FCFA</p>
+              <p>L'Oral sans peine - Anglais BEPC (3e) - Ouvrage scolaire et pédagogique pour Troisième en Anglais, publié par Collection Polyglotte aux Éditions Phénix.</p>
+              <a href="/livre/a74305f0-288d-4a4e-b530-fdbad9adc4d6">Consulter la fiche officielle de L'Oral sans peine - Anglais BEPC (3e)</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=e6effd67-4810-49c0-9e41-3b17211d5e5b">L'Oral sans peine - Anglais BAC (Tle)</a></h3>
+              <p>Matière : <strong>Anglais</strong> | Classe / Niveau : <strong>Terminale</strong> | Collection : <strong>Collection Polyglotte</strong> | Prix : 2000 FCFA</p>
+              <p>L'Oral sans peine - Anglais BAC (Tle) - Ouvrage scolaire et pédagogique pour Terminale en Anglais, publié par Collection Polyglotte aux Éditions Phénix.</p>
+              <a href="/livre/e6effd67-4810-49c0-9e41-3b17211d5e5b">Consulter la fiche officielle de L'Oral sans peine - Anglais BAC (Tle)</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=456e5c6b-ae86-46bb-9293-496874f96a66">Le Writing sans peine - Anglais </a></h3>
+              <p>Matière : <strong>Anglais</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Polyglotte</strong> | Prix : 2000 FCFA</p>
+              <p>Le Writing sans peine - Anglais  - Ouvrage scolaire et pédagogique pour élèves en Anglais, publié par Collection Polyglotte aux Éditions Phénix.</p>
+              <a href="/livre/456e5c6b-ae86-46bb-9293-496874f96a66">Consulter la fiche officielle de Le Writing sans peine - Anglais </a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=76597a8b-0b2f-4625-b123-4a984447f1cb">Les codes de la Dictée-Questions réussie CM1/CM2</a></h3>
+              <p>Matière : <strong>Français</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Racines</strong> | Prix : 2000 FCFA</p>
+              <p>Les codes de la Dictée-Questions réussie CM1/CM2 - Ouvrage scolaire et pédagogique pour élèves en Français, publié par Collection Racines aux Éditions Phénix.</p>
+              <a href="/livre/76597a8b-0b2f-4625-b123-4a984447f1cb">Consulter la fiche officielle de Les codes de la Dictée-Questions réussie CM1/CM2</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0">La poule aux oeufs dort</a></h3>
+              <p>Matière : <strong>Français</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Papyrus</strong> | Prix : 2000 FCFA</p>
+              <p>La poule aux oeufs dort - Ouvrage scolaire et pédagogique pour élèves en Français, publié par Collection Papyrus aux Éditions Phénix.</p>
+              <a href="/livre/a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0">Consulter la fiche officielle de La poule aux oeufs dort</a>
+            </article>
+          </li>
+          <li>
+            <article>
+              <h3><a href="/catalogue?ouvrage=9b1e59e7-f9ee-4454-abfe-971a3af7cf5b">Soir d'un monde cent têtes ni cœur</a></h3>
+              <p>Matière : <strong>Français</strong> | Classe / Niveau : <strong>Tous niveaux</strong> | Collection : <strong>Collection Papyrus</strong> | Prix : 2000 FCFA</p>
+              <p>Soir d'un monde cent têtes ni cœur - Ouvrage scolaire et pédagogique pour élèves en Français, publié par Collection Papyrus aux Éditions Phénix.</p>
+              <a href="/livre/9b1e59e7-f9ee-4454-abfe-971a3af7cf5b">Consulter la fiche officielle de Soir d'un monde cent têtes ni cœur</a>
+            </article>
+          </li>
+        </ul>
+      </section>
+
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

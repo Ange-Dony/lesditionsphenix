@@ -3,107 +3,411 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- Page d'accueil : Les Éditions Phénix - La Maison du Succès -->
+  <!-- Pages Principales : Les Éditions Phénix - La Maison du Succès -->
   <url>
     <loc>https://www.leseditionsphenix.com/</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Catalogue complet des manuels ivoiriens, annales et ouvrages -->
   <url>
     <loc>https://www.leseditionsphenix.com/catalogue</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
-
-  <!-- Nos 7 Collections Éditoriales -->
   <url>
     <loc>https://www.leseditionsphenix.com/collections</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
-
-  <!-- Ressources Pédagogiques & Fiches de Révision -->
   <url>
     <loc>https://www.leseditionsphenix.com/ressources</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
-
-  <!-- À Propos de la Maison d'Édition Ivoirienne -->
   <url>
     <loc>https://www.leseditionsphenix.com/a-propos</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
-
-  <!-- Partenaires, Écoles & Librairies -->
   <url>
     <loc>https://www.leseditionsphenix.com/partenaires</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
 
-  <!-- Collections Directes : 1. Collection Archives (Histoire-Géo) -->
+  <!-- Collections Thématiques -->
   <url>
     <loc>https://www.leseditionsphenix.com/catalogue?collection=71c185e9-405f-459a-8631-522c49984a0c</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
-
-  <!-- Collections Directes : 2. Collection École et Métiers (CMC) -->
   <url>
     <loc>https://www.leseditionsphenix.com/catalogue?collection=d2d39434-5d5a-4215-bf0b-6f3546d6975c</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
-
-  <!-- Collections Directes : 3. Collection Jeunes Citoyens (EDHC) -->
   <url>
     <loc>https://www.leseditionsphenix.com/catalogue?collection=ed10fefa-4a50-48e8-b206-012ea00b9048</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=ef018503-0122-415b-a58c-e68d667ea227</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=813b8958-9678-4ba0-9c36-aa7afc7b6324</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=19d19ec6-b2ec-4d46-89af-840fbb49c2e9</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?collection=f228f276-4714-437e-bbf5-057869987c43</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- Collections Directes : 4. Collection Succès (Annales BEPC/BAC, Citations Philosophiques, Construction Graphique) -->
+  <!-- Ouvrages & Manuels Scolaires Individuels (Indexation par titre et matière) -->
   <url>
-    <loc>https://www.leseditionsphenix.com/catalogue?collection=ef018503-0122-415b-a58c-e68d667ea227</loc>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=8aa1f44c-035a-4753-954f-0e700315afcf</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
-
-  <!-- Collections Directes : 5. Collection Polyglotte (Anglais & Langues) -->
   <url>
-    <loc>https://www.leseditionsphenix.com/catalogue?collection=813b8958-9678-4ba0-9c36-aa7afc7b6324</loc>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://www.leseditionsphenix.com/livre/8aa1f44c-035a-4753-954f-0e700315afcf</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
-
-  <!-- Collections Directes : 6. Collection Racines (Français, Dictée-Questions) -->
   <url>
-    <loc>https://www.leseditionsphenix.com/catalogue?collection=19d19ec6-b2ec-4d46-89af-840fbb49c2e9</loc>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=f04949ed-fed6-4985-b831-eefea4d2210c</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
-
-  <!-- Collections Directes : 7. Collection Papyrus (Théâtre & Littérature) -->
   <url>
-    <loc>https://www.leseditionsphenix.com/catalogue?collection=f228f276-4714-437e-bbf5-057869987c43</loc>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://www.leseditionsphenix.com/livre/f04949ed-fed6-4985-b831-eefea4d2210c</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=87781338-4dd7-41f8-8ff4-58e4f2eb7d37</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/87781338-4dd7-41f8-8ff4-58e4f2eb7d37</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=21a97172-547a-403c-a99b-fdc55edfb266</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/21a97172-547a-403c-a99b-fdc55edfb266</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=6ce3ac86-826d-41b7-ae80-f5b70058c662</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/6ce3ac86-826d-41b7-ae80-f5b70058c662</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=bab41a8d-0433-47f3-b938-ddd436c6f176</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/bab41a8d-0433-47f3-b938-ddd436c6f176</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=4c0ca083-4190-4a26-825f-ebeb96315cc2</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/4c0ca083-4190-4a26-825f-ebeb96315cc2</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=81834041-1a1a-4154-b778-4e924304c8ca</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/81834041-1a1a-4154-b778-4e924304c8ca</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=65ce8d84-e008-409c-affd-288cf39f3f5e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/65ce8d84-e008-409c-affd-288cf39f3f5e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=f38c9324-fa93-439f-8193-b53bb7bbf7ae</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/f38c9324-fa93-439f-8193-b53bb7bbf7ae</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=57892a19-ed41-4be1-a1fc-41ed327b304e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/57892a19-ed41-4be1-a1fc-41ed327b304e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=7a76a543-40da-40c7-9c72-86ec0692fd26</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/7a76a543-40da-40c7-9c72-86ec0692fd26</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=7f64e99a-4013-4cda-aaf0-ec7afc996397</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/7f64e99a-4013-4cda-aaf0-ec7afc996397</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=0f97d0ec-7aba-4416-9a3b-49f87a29951b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/0f97d0ec-7aba-4416-9a3b-49f87a29951b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=19da6afa-85c4-4ea0-af10-bf2672a7b656</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/19da6afa-85c4-4ea0-af10-bf2672a7b656</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=b0e245a2-d946-4164-9079-ad5167cd367e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/b0e245a2-d946-4164-9079-ad5167cd367e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=3f470e31-0b4a-4a75-ac2c-6804572be3ee</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/3f470e31-0b4a-4a75-ac2c-6804572be3ee</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=cb206849-6bba-41a8-8178-d17ebcec77cb</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/cb206849-6bba-41a8-8178-d17ebcec77cb</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=43500394-daa0-4242-8fc7-df909cf25937</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/43500394-daa0-4242-8fc7-df909cf25937</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=289f9ae3-9096-469c-aed0-90a772bbc95e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/289f9ae3-9096-469c-aed0-90a772bbc95e</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=25735120-c762-4b3d-951f-a4d563ee4b6a</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/25735120-c762-4b3d-951f-a4d563ee4b6a</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=a74305f0-288d-4a4e-b530-fdbad9adc4d6</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/a74305f0-288d-4a4e-b530-fdbad9adc4d6</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=e6effd67-4810-49c0-9e41-3b17211d5e5b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/e6effd67-4810-49c0-9e41-3b17211d5e5b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=456e5c6b-ae86-46bb-9293-496874f96a66</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/456e5c6b-ae86-46bb-9293-496874f96a66</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=76597a8b-0b2f-4625-b123-4a984447f1cb</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/76597a8b-0b2f-4625-b123-4a984447f1cb</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/a8b32fe0-65e7-4157-a4fe-34c29d6d3ad0</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/catalogue?ouvrage=9b1e59e7-f9ee-4454-abfe-971a3af7cf5b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.leseditionsphenix.com/livre/9b1e59e7-f9ee-4454-abfe-971a3af7cf5b</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
 </urlset>
