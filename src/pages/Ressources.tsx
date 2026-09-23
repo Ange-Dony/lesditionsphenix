@@ -22,7 +22,6 @@ export function Ressources() {
 
   // Password Unlock Modal State
   const [activePasswordRessource, setActivePasswordRessource] = useState<Ressource | null>(null);
-  const [pendingAction, setPendingAction] = useState<'view' | 'download'>('view');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -58,22 +57,17 @@ export function Ressources() {
     fetchData();
   }, []);
 
-  const handleActionClick = (res: Ressource, action: 'view' | 'download') => {
+  const handleOpenRessource = (res: Ressource) => {
     const pwd = getResourcePassword(res);
     const isUnlocked = !pwd || unlockedIds.includes(res.id) || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(`res_unlocked_${res.id}`) === 'true');
 
     if (isUnlocked) {
-      if (action === 'view') {
-        setViewingRessource(res);
-      } else {
-        window.open(res.google_drive_url, '_blank');
-      }
+      setViewingRessource(res);
       return;
     }
 
     // Le document est verrouillé par mot de passe
     setActivePasswordRessource(res);
-    setPendingAction(action);
     setEnteredPassword('');
     setPasswordError(false);
     setShowPassword(false);
@@ -89,17 +83,12 @@ export function Ressources() {
       setUnlockedIds(prev => [...prev, activePasswordRessource.id]);
       
       const targetRes = activePasswordRessource;
-      const targetAction = pendingAction;
-
       setActivePasswordRessource(null);
       setEnteredPassword('');
       setPasswordError(false);
       
-      if (targetAction === 'view') {
-        setViewingRessource(targetRes);
-      } else {
-        window.open(targetRes.google_drive_url, '_blank');
-      }
+      // Ouvrir immédiatement la liseuse intégrée
+      setViewingRessource(targetRes);
     } else {
       setPasswordError(true);
     }
@@ -281,44 +270,29 @@ export function Ressources() {
                   </div>
                 </div>
                 
-                {/* Actions : Consulter sur le site & Télécharger */}
-                <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
-                  {/* Bouton Consulter / Lire sur le site */}
+                {/* Action unique : Consulter le document sur le site */}
+                <div className="shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
                   <button 
-                    onClick={() => handleActionClick(ressource, 'view')}
+                    onClick={() => handleOpenRessource(ressource)}
                     className={cn(
-                      "inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
-                      hasPassword && !isUnlocked
-                        ? "bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300"
-                        : "bg-white hover:bg-gray-50 text-anthracite border border-gray-200"
-                    )}
-                    title="Lire / Consulter le document directement sur le site"
-                  >
-                    {hasPassword && !isUnlocked ? (
-                      <Lock size={14} className="text-amber-700" />
-                    ) : (
-                      <Eye size={15} className="text-bordeaux" />
-                    )}
-                    <span>Consulter</span>
-                  </button>
-
-                  {/* Bouton Télécharger */}
-                  <button 
-                    onClick={() => handleActionClick(ressource, 'download')}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
                       hasPassword && !isUnlocked
                         ? "bg-amber-700 hover:bg-amber-800 text-white"
                         : "bg-bleu hover:bg-bleu-royal text-white"
                     )}
-                    title="Télécharger le fichier sur votre appareil"
+                    title="Consulter le document sur le site"
                   >
                     {hasPassword && !isUnlocked ? (
-                      <Lock size={14} className="text-jaune-vif" />
+                      <>
+                        <Lock size={15} className="text-jaune-vif" />
+                        <span>Consulter • Code requis</span>
+                      </>
                     ) : (
-                      <Download size={15} className="text-jaune-vif" />
+                      <>
+                        <Eye size={16} className="text-jaune-vif" />
+                        <span>Consulter</span>
+                      </>
                     )}
-                    <span>Télécharger</span>
                   </button>
                 </div>
               </div>
@@ -354,7 +328,7 @@ export function Ressources() {
                     Document Sécurisé
                   </h3>
                   <span className="text-[11px] font-semibold text-amber-800 uppercase tracking-wide">
-                    {pendingAction === 'view' ? 'Accès réservé pour consulter' : 'Accès réservé pour télécharger'}
+                    Accès réservé aux enseignants
                   </span>
                 </div>
               </div>
@@ -419,9 +393,7 @@ export function Ressources() {
                   className="w-full py-2.5 px-4 bg-bordeaux hover:bg-bordeaux-light text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors shadow-xs flex items-center justify-center gap-2"
                 >
                   <Unlock size={16} />
-                  <span>
-                    {pendingAction === 'view' ? 'Déverrouiller & Consulter' : 'Déverrouiller & Télécharger'}
-                  </span>
+                  <span>Déverrouiller & Ouvrir le document</span>
                 </button>
                 <button 
                   type="button" 
