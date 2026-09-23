@@ -25,7 +25,6 @@ export function Ressources() {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
 
   // Direct On-Site Reader State
   const [viewingRessource, setViewingRessource] = useState<Ressource | null>(null);
@@ -59,14 +58,14 @@ export function Ressources() {
 
   const handleOpenRessource = (res: Ressource) => {
     const pwd = getResourcePassword(res);
-    const isUnlocked = !pwd || unlockedIds.includes(res.id) || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(`res_unlocked_${res.id}`) === 'true');
-
-    if (isUnlocked) {
+    
+    // Si la ressource n'a aucun mot de passe configuré, accès direct
+    if (!pwd) {
       setViewingRessource(res);
       return;
     }
 
-    // Le document est verrouillé par mot de passe
+    // Le document est verrouillé : exiger le mot de passe à chaque consultation
     setActivePasswordRessource(res);
     setEnteredPassword('');
     setPasswordError(false);
@@ -79,15 +78,12 @@ export function Ressources() {
 
     const expectedPwd = getResourcePassword(activePasswordRessource);
     if (expectedPwd && enteredPassword.trim().toLowerCase() === expectedPwd.trim().toLowerCase()) {
-      sessionStorage.setItem(`res_unlocked_${activePasswordRessource.id}`, 'true');
-      setUnlockedIds(prev => [...prev, activePasswordRessource.id]);
-      
       const targetRes = activePasswordRessource;
       setActivePasswordRessource(null);
       setEnteredPassword('');
       setPasswordError(false);
       
-      // Ouvrir immédiatement la liseuse intégrée
+      // Ouvrir immédiatement la liseuse intégrée pour cette consultation
       setViewingRessource(targetRes);
     } else {
       setPasswordError(true);
@@ -214,7 +210,6 @@ export function Ressources() {
         <div className="space-y-4">
           {filteredRessources.map((ressource) => {
             const hasPassword = !!getResourcePassword(ressource);
-            const isUnlocked = unlockedIds.includes(ressource.id) || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(`res_unlocked_${ressource.id}`) === 'true');
             const displayFormat = cleanResourceFormat(ressource.format);
 
             return (
@@ -233,17 +228,10 @@ export function Ressources() {
                       </span>
 
                       {/* Badge Sécurisé / Mot de passe */}
-                      {hasPassword && !isUnlocked && (
+                      {hasPassword && (
                         <span className="px-2.5 py-0.5 bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
                           <Lock size={11} className="text-amber-700" />
                           Réservé Enseignants
-                        </span>
-                      )}
-
-                      {hasPassword && isUnlocked && (
-                        <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
-                          <Unlock size={11} className="text-emerald-600" />
-                          Déverrouillé
                         </span>
                       )}
 
@@ -276,13 +264,13 @@ export function Ressources() {
                     onClick={() => handleOpenRessource(ressource)}
                     className={cn(
                       "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
-                      hasPassword && !isUnlocked
+                      hasPassword
                         ? "bg-amber-700 hover:bg-amber-800 text-white"
                         : "bg-bleu hover:bg-bleu-royal text-white"
                     )}
-                    title="Consulter le document sur le site"
+                    title={hasPassword ? "Consulter le document (mot de passe enseignant requis)" : "Consulter le document sur le site"}
                   >
-                    {hasPassword && !isUnlocked ? (
+                    {hasPassword ? (
                       <>
                         <Lock size={15} className="text-jaune-vif" />
                         <span>Consulter • Code requis</span>
