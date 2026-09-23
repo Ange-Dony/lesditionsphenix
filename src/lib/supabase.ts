@@ -14,8 +14,19 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABA
 export const supabase = createClient<any>(supabaseUrl, supabaseAnonKey);
 
 export async function uploadFile(file: File, bucket: string, path: string): Promise<string> {
-  const fileExt = file.name.split('.').pop();
-  const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+  const parts = file.name.split('.');
+  const fileExt = parts.length > 1 ? parts.pop() : '';
+  const rawBaseName = parts.join('.');
+  
+  // Nettoyer le nom d'origine sans caractères accentués ni caractères spéciaux
+  const cleanBase = rawBaseName
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_-]/g, '_')
+    .replace(/_+/g, '_')
+    .substring(0, 60) || 'document';
+
+  const fileName = `${cleanBase}_${Date.now()}${fileExt ? `.${fileExt}` : ''}`;
   const filePath = `${path}/${fileName}`;
 
   const { error: uploadError } = await supabase.storage

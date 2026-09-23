@@ -297,7 +297,6 @@ export function Ressources() {
           subtitle={`${viewingRessource.type}${viewingRessource.niveau ? ` • ${viewingRessource.niveau}` : ''}${viewingRessource.matiere ? ` • ${viewingRessource.matiere}` : ''}`}
           onClose={() => setViewingRessource(null)}
           canDownload={true}
-          onDownload={() => window.open(viewingRessource.google_drive_url, '_blank')}
         />
       )}
 

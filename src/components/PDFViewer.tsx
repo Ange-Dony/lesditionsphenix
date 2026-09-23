@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, ExternalLink, Download, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, ExternalLink, Download, FileText, Loader2 } from 'lucide-react';
 
 interface PDFViewerProps {
   url: string;
@@ -33,15 +33,81 @@ export function getEmbedUrl(url: string): string {
   return url;
 }
 
+/**
+ * Télécharge le fichier en préservant fidèlement le nom et titre du document
+ */
+export async function downloadFileWithTitle(url: string, title: string) {
+  try {
+    // Détecter l'extension du fichier
+    const cleanUrl = url.split('?')[0].split('#')[0];
+    const matchExt = cleanUrl.match(/\.([a-zA-Z0-9]{2,5})$/);
+    const ext = matchExt ? matchExt[1].toLowerCase() : 'pdf';
+
+    // Générer un nom de fichier propre basé sur le titre réel
+    let safeName = title
+      .trim()
+      .replace(/[/\\?%*:|"<>]/g, '_')
+      .replace(/\s+/g, '_');
+
+    if (!safeName.toLowerCase().endsWith(`.${ext}`)) {
+      safeName = `${safeName}.${ext}`;
+    }
+
+    // Téléchargement via Blob pour forcer le nom exact sous les navigateurs
+    if (!url.includes('drive.google.com')) {
+      const response = await fetch(url);
+      if (response.ok) {
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = safeName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+        return;
+      }
+    }
+
+    // Pour Google Drive : téléchargement direct
+    const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (driveMatch && driveMatch[1]) {
+      window.open(`https://drive.google.com/uc?export=download&id=${driveMatch[1]}`, '_blank');
+      return;
+    }
+
+    // Repli standard avec balise <a> et attribut download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = safeName;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    console.error('Erreur lors du téléchargement personnalisé:', err);
+    window.open(url, '_blank');
+  }
+}
+
 export function PDFViewer({ url, title, subtitle, onClose, canDownload = true, onDownload }: PDFViewerProps) {
+  const [downloading, setDownloading] = useState(false);
   const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)$/i) != null;
   const embedUrl = getEmbedUrl(url);
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (onDownload) {
       onDownload();
-    } else {
-      window.open(url, '_blank');
+      return;
+    }
+
+    setDownloading(true);
+    try {
+      await downloadFileWithTitle(url, title);
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -71,11 +137,21 @@ export function PDFViewer({ url, title, subtitle, onClose, canDownload = true, o
             {canDownload && (
               <button 
                 onClick={handleDownload}
-                className="px-3 sm:px-4 py-2 bg-bleu hover:bg-bleu-royal text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-xs"
+                disabled={downloading}
+                className="px-3 sm:px-4 py-2 bg-bleu hover:bg-bleu-royal text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-xs disabled:opacity-75 cursor-pointer"
                 title="Télécharger le document"
               >
-                <Download size={15} className="text-jaune-vif" />
-                <span className="hidden sm:inline">Télécharger</span>
+                {downloading ? (
+                  <>
+                    <Loader2 size={15} className="animate-spin text-jaune-vif" />
+                    <span className="hidden sm:inline">Téléchargement...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download size={15} className="text-jaune-vif" />
+                    <span className="hidden sm:inline">Télécharger</span>
+                  </>
+                )}
               </button>
             )}
 
