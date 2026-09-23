@@ -4,6 +4,7 @@ import { Ressource, Collection, Ouvrage, getResourcePassword, cleanResourceForma
 import { Search, Filter, FileText, Download, ExternalLink, FileSpreadsheet, File, Lock, Unlock, Key, Eye, EyeOff, X, MessageCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { SEOHead } from '../components/SEOHead';
+import { PDFViewer } from '../components/PDFViewer';
 
 export function Ressources() {
   const [ressources, setRessources] = useState<Ressource[]>([]);
@@ -21,10 +22,14 @@ export function Ressources() {
 
   // Password Unlock Modal State
   const [activePasswordRessource, setActivePasswordRessource] = useState<Ressource | null>(null);
+  const [pendingAction, setPendingAction] = useState<'view' | 'download'>('view');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
+
+  // Direct On-Site Reader State
+  const [viewingRessource, setViewingRessource] = useState<Ressource | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -53,24 +58,22 @@ export function Ressources() {
     fetchData();
   }, []);
 
-  const handleDownloadClick = (res: Ressource) => {
+  const handleActionClick = (res: Ressource, action: 'view' | 'download') => {
     const pwd = getResourcePassword(res);
-    
-    // Si aucun mot de passe n'est configuré sur la ressource
-    if (!pwd) {
-      window.open(res.google_drive_url, '_blank');
-      return;
-    }
+    const isUnlocked = !pwd || unlockedIds.includes(res.id) || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(`res_unlocked_${res.id}`) === 'true');
 
-    // Vérifier si la ressource a déjà été déverrouillée dans la session
-    const isUnlocked = unlockedIds.includes(res.id) || sessionStorage.getItem(`res_unlocked_${res.id}`) === 'true';
     if (isUnlocked) {
-      window.open(res.google_drive_url, '_blank');
+      if (action === 'view') {
+        setViewingRessource(res);
+      } else {
+        window.open(res.google_drive_url, '_blank');
+      }
       return;
     }
 
-    // Ouvrir la modale de mot de passe
+    // Le document est verrouillé par mot de passe
     setActivePasswordRessource(res);
+    setPendingAction(action);
     setEnteredPassword('');
     setPasswordError(false);
     setShowPassword(false);
@@ -85,13 +88,18 @@ export function Ressources() {
       sessionStorage.setItem(`res_unlocked_${activePasswordRessource.id}`, 'true');
       setUnlockedIds(prev => [...prev, activePasswordRessource.id]);
       
-      const fileUrl = activePasswordRessource.google_drive_url;
+      const targetRes = activePasswordRessource;
+      const targetAction = pendingAction;
+
       setActivePasswordRessource(null);
       setEnteredPassword('');
       setPasswordError(false);
       
-      // Ouvrir le fichier
-      window.open(fileUrl, '_blank');
+      if (targetAction === 'view') {
+        setViewingRessource(targetRes);
+      } else {
+        window.open(targetRes.google_drive_url, '_blank');
+      }
     } else {
       setPasswordError(true);
     }
@@ -273,33 +281,62 @@ export function Ressources() {
                   </div>
                 </div>
                 
-                <div className="shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
+                {/* Actions : Consulter sur le site & Télécharger */}
+                <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
+                  {/* Bouton Consulter / Lire sur le site */}
                   <button 
-                    onClick={() => handleDownloadClick(ressource)}
+                    onClick={() => handleActionClick(ressource, 'view')}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
+                      "inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
+                      hasPassword && !isUnlocked
+                        ? "bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300"
+                        : "bg-white hover:bg-gray-50 text-anthracite border border-gray-200"
+                    )}
+                    title="Lire / Consulter le document directement sur le site"
+                  >
+                    {hasPassword && !isUnlocked ? (
+                      <Lock size={14} className="text-amber-700" />
+                    ) : (
+                      <Eye size={15} className="text-bordeaux" />
+                    )}
+                    <span>Consulter</span>
+                  </button>
+
+                  {/* Bouton Télécharger */}
+                  <button 
+                    onClick={() => handleActionClick(ressource, 'download')}
+                    className={cn(
+                      "inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
                       hasPassword && !isUnlocked
                         ? "bg-amber-700 hover:bg-amber-800 text-white"
                         : "bg-bleu hover:bg-bleu-royal text-white"
                     )}
+                    title="Télécharger le fichier sur votre appareil"
                   >
                     {hasPassword && !isUnlocked ? (
-                      <>
-                        <Lock size={15} className="text-jaune-vif" />
-                        <span>Code requis • Déverrouiller</span>
-                      </>
+                      <Lock size={14} className="text-jaune-vif" />
                     ) : (
-                      <>
-                        <Download size={16} className="text-jaune-vif" />
-                        <span>Consulter / Télécharger</span>
-                      </>
+                      <Download size={15} className="text-jaune-vif" />
                     )}
+                    <span>Télécharger</span>
                   </button>
                 </div>
               </div>
             );
           })}
         </div>
+      )}
+
+      {/* LISEUSE DIRECTE SUR LE SITE (PDF VIEWER) */}
+      {viewingRessource && (
+        <PDFViewer 
+          url={viewingRessource.google_drive_url}
+          title={viewingRessource.titre}
+          subtitle={`${viewingRessource.type}${viewingRessource.niveau ? ` • ${viewingRessource.niveau}` : ''}${viewingRessource.matiere ? ` • ${viewingRessource.matiere}` : ''}`}
+          onClose={() => setViewingRessource(null)}
+          canDownload={true}
+          onDownload={() => window.open(viewingRessource.google_drive_url, '_blank')}
+        />
       )}
 
       {/* MODAL DE DEVERROUILLAGE PAR MOT DE PASSE */}
@@ -317,7 +354,7 @@ export function Ressources() {
                     Document Sécurisé
                   </h3>
                   <span className="text-[11px] font-semibold text-amber-800 uppercase tracking-wide">
-                    Accès réservé aux enseignants
+                    {pendingAction === 'view' ? 'Accès réservé pour consulter' : 'Accès réservé pour télécharger'}
                   </span>
                 </div>
               </div>
@@ -382,7 +419,9 @@ export function Ressources() {
                   className="w-full py-2.5 px-4 bg-bordeaux hover:bg-bordeaux-light text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors shadow-xs flex items-center justify-center gap-2"
                 >
                   <Unlock size={16} />
-                  <span>Déverrouiller & Télécharger</span>
+                  <span>
+                    {pendingAction === 'view' ? 'Déverrouiller & Consulter' : 'Déverrouiller & Télécharger'}
+                  </span>
                 </button>
                 <button 
                   type="button" 
@@ -400,7 +439,7 @@ export function Ressources() {
                 </p>
                 <a 
                   href={`https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
-                    `Bonjour Les Éditions Phénix, je suis enseignant(e) et je souhaiterais obtenir le mot de passe d'accès pour télécharger la ressource : "${activePasswordRessource.titre}". Merci !`
+                    `Bonjour Les Éditions Phénix, je suis enseignant(e) et je souhaiterais obtenir le mot de passe d'accès pour la ressource : "${activePasswordRessource.titre}". Merci !`
                   )}`}
                   target="_blank" 
                   rel="noopener noreferrer" 
