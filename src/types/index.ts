@@ -50,9 +50,29 @@ export interface Ressource {
   format: string | null;
   google_drive_url: string;
   publie: boolean;
+  mot_de_passe?: string | null;
   created_at: string;
   ouvrages?: Ouvrage;
   collections?: Collection;
+}
+
+export function getResourcePassword(ressource?: Partial<Ressource> | null): string | null {
+  if (!ressource) return null;
+  if (ressource.mot_de_passe && ressource.mot_de_passe.trim() !== '') {
+    return ressource.mot_de_passe.trim();
+  }
+  if (ressource.format && ressource.format.includes('|pwd:')) {
+    const parts = ressource.format.split('|pwd:');
+    if (parts[1] && parts[1].trim() !== '') {
+      return parts[1].trim();
+    }
+  }
+  return null;
+}
+
+export function cleanResourceFormat(format?: string | null): string {
+  if (!format) return 'PDF';
+  return format.split('|pwd:')[0] || 'PDF';
 }
 
 export interface ParametresSite {

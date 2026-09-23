@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Ressource, Collection, Ouvrage } from '../types';
-import { Search, Filter, FileText, Download, ExternalLink, FileSpreadsheet, File } from 'lucide-react';
+import { Ressource, Collection, Ouvrage, getResourcePassword, cleanResourceFormat } from '../types';
+import { Search, Filter, FileText, Download, ExternalLink, FileSpreadsheet, File, Lock, Unlock, Key, Eye, EyeOff, X, MessageCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { SEOHead } from '../components/SEOHead';
 
@@ -11,12 +11,20 @@ export function Ressources() {
   const [ouvrages, setOuvrages] = useState<Ouvrage[]>([]);
   const [loading, setLoading] = useState(true);
   const [texteRessources, setTexteRessources] = useState("Accédez à nos fiches de cours, corrigés et documents complémentaires. Filtrez par niveau, matière ou type pour trouver rapidement ce dont vous avez besoin.");
+  const [whatsappNumber, setWhatsappNumber] = useState('+22501020304');
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedMatiere, setSelectedMatiere] = useState('all');
   const [selectedNiveau, setSelectedNiveau] = useState('all');
+
+  // Password Unlock Modal State
+  const [activePasswordRessource, setActivePasswordRessource] = useState<Ressource | null>(null);
+  const [enteredPassword, setEnteredPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,14 +33,15 @@ export function Ressources() {
           supabase.from('ressources').select('*, ouvrages(titre), collections(nom)').eq('publie', true).order('created_at', { ascending: false }),
           supabase.from('collections').select('*').eq('publie', true),
           supabase.from('ouvrages').select('id, titre').eq('disponibilite', true),
-          supabase.from('parametres_site').select('texte_ressources').limit(1)
+          supabase.from('parametres_site').select('texte_ressources, telephone_whatsapp').limit(1)
         ]);
 
         if (resData.data) setRessources(resData.data);
         if (colData.data) setCollections(colData.data);
         if (ouvData.data) setOuvrages(ouvData.data);
-        if (paramRes.data && paramRes.data[0] && paramRes.data[0].texte_ressources) {
-          setTexteRessources(paramRes.data[0].texte_ressources);
+        if (paramRes.data && paramRes.data[0]) {
+          if (paramRes.data[0].texte_ressources) setTexteRessources(paramRes.data[0].texte_ressources);
+          if (paramRes.data[0].telephone_whatsapp) setWhatsappNumber(paramRes.data[0].telephone_whatsapp);
         }
       } catch (error) {
         console.error("Error fetching ressources:", error);
@@ -43,6 +52,50 @@ export function Ressources() {
 
     fetchData();
   }, []);
+
+  const handleDownloadClick = (res: Ressource) => {
+    const pwd = getResourcePassword(res);
+    
+    // Si aucun mot de passe n'est configuré sur la ressource
+    if (!pwd) {
+      window.open(res.google_drive_url, '_blank');
+      return;
+    }
+
+    // Vérifier si la ressource a déjà été déverrouillée dans la session
+    const isUnlocked = unlockedIds.includes(res.id) || sessionStorage.getItem(`res_unlocked_${res.id}`) === 'true';
+    if (isUnlocked) {
+      window.open(res.google_drive_url, '_blank');
+      return;
+    }
+
+    // Ouvrir la modale de mot de passe
+    setActivePasswordRessource(res);
+    setEnteredPassword('');
+    setPasswordError(false);
+    setShowPassword(false);
+  };
+
+  const handleUnlockSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activePasswordRessource) return;
+
+    const expectedPwd = getResourcePassword(activePasswordRessource);
+    if (expectedPwd && enteredPassword.trim().toLowerCase() === expectedPwd.trim().toLowerCase()) {
+      sessionStorage.setItem(`res_unlocked_${activePasswordRessource.id}`, 'true');
+      setUnlockedIds(prev => [...prev, activePasswordRessource.id]);
+      
+      const fileUrl = activePasswordRessource.google_drive_url;
+      setActivePasswordRessource(null);
+      setEnteredPassword('');
+      setPasswordError(false);
+      
+      // Ouvrir le fichier
+      window.open(fileUrl, '_blank');
+    } else {
+      setPasswordError(true);
+    }
+  };
 
   // Extract unique values for filters
   const types = Array.from(new Set(ressources.map(r => r.type).filter(Boolean)));
@@ -58,12 +111,14 @@ export function Ressources() {
   });
 
   const getIconForFormat = (format: string | null) => {
-    const f = (format || '').toLowerCase();
+    const f = (cleanResourceFormat(format) || '').toLowerCase();
     if (f.includes('pdf')) return <FileText size={24} className="text-red-500" />;
     if (f.includes('doc') || f.includes('word')) return <FileText size={24} className="text-blue-600" />;
     if (f.includes('xls') || f.includes('excel')) return <FileSpreadsheet size={24} className="text-green-600" />;
     return <File size={24} className="text-gray-500" />;
   };
+
+  const cleanWhatsappNumber = whatsappNumber.replace(/[^0-9]/g, '');
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -160,56 +215,203 @@ export function Ressources() {
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredRessources.map((ressource) => (
-            <div 
-              key={ressource.id} 
-              className="group flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-6 bg-white rounded-2xl border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-bordeaux/30 transition-all duration-200 gap-4"
-            >
-              <div className="flex items-start gap-4">
-                <div className="p-3.5 bg-ivoire-warm rounded-xl shrink-0 group-hover:scale-105 transition-transform">
-                  {getIconForFormat(ressource.format)}
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                    <span className="px-2.5 py-0.5 bg-bordeaux/10 text-bordeaux text-[11px] font-bold rounded-full uppercase tracking-wider">
-                      {ressource.type}
-                    </span>
-                    {(ressource.niveau || ressource.matiere) && (
-                      <span className="text-xs text-anthracite-muted font-medium">
-                        {ressource.niveau} {ressource.niveau && ressource.matiere && '•'} {ressource.matiere}
+          {filteredRessources.map((ressource) => {
+            const hasPassword = !!getResourcePassword(ressource);
+            const isUnlocked = unlockedIds.includes(ressource.id) || (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(`res_unlocked_${ressource.id}`) === 'true');
+            const displayFormat = cleanResourceFormat(ressource.format);
+
+            return (
+              <div 
+                key={ressource.id} 
+                className="group flex flex-col sm:flex-row sm:items-center justify-between p-5 sm:p-6 bg-white rounded-2xl border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-bordeaux/30 transition-all duration-200 gap-4"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3.5 bg-ivoire-warm rounded-xl shrink-0 group-hover:scale-105 transition-transform">
+                    {getIconForFormat(ressource.format)}
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                      <span className="px-2.5 py-0.5 bg-bordeaux/10 text-bordeaux text-[11px] font-bold rounded-full uppercase tracking-wider">
+                        {ressource.type}
                       </span>
-                    )}
-                    {ressource.format && (
-                      <span className="text-[10px] uppercase font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">
-                        {ressource.format}
-                      </span>
+
+                      {/* Badge Sécurisé / Mot de passe */}
+                      {hasPassword && !isUnlocked && (
+                        <span className="px-2.5 py-0.5 bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
+                          <Lock size={11} className="text-amber-700" />
+                          Réservé Enseignants
+                        </span>
+                      )}
+
+                      {hasPassword && isUnlocked && (
+                        <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
+                          <Unlock size={11} className="text-emerald-600" />
+                          Déverrouillé
+                        </span>
+                      )}
+
+                      {(ressource.niveau || ressource.matiere) && (
+                        <span className="text-xs text-anthracite-muted font-medium">
+                          {ressource.niveau} {ressource.niveau && ressource.matiere && '•'} {ressource.matiere}
+                        </span>
+                      )}
+                      {displayFormat && (
+                        <span className="text-[10px] uppercase font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                          {displayFormat}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-serif font-bold text-lg text-anthracite group-hover:text-bordeaux transition-colors mb-1">
+                      {ressource.titre}
+                    </h3>
+                    {ressource.ouvrages?.titre && (
+                      <p className="text-xs text-anthracite-muted flex items-center gap-1">
+                        <span>Lié à l'ouvrage :</span>
+                        <span className="italic font-medium text-anthracite">{ressource.ouvrages.titre}</span>
+                      </p>
                     )}
                   </div>
-                  <h3 className="font-serif font-bold text-lg text-anthracite group-hover:text-bordeaux transition-colors mb-1">
-                    {ressource.titre}
-                  </h3>
-                  {ressource.ouvrages?.titre && (
-                    <p className="text-xs text-anthracite-muted flex items-center gap-1">
-                      <span>Lié à l'ouvrage :</span>
-                      <span className="italic font-medium text-anthracite">{ressource.ouvrages.titre}</span>
-                    </p>
-                  )}
+                </div>
+                
+                <div className="shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
+                  <button 
+                    onClick={() => handleDownloadClick(ressource)}
+                    className={cn(
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer",
+                      hasPassword && !isUnlocked
+                        ? "bg-amber-700 hover:bg-amber-800 text-white"
+                        : "bg-bleu hover:bg-bleu-royal text-white"
+                    )}
+                  >
+                    {hasPassword && !isUnlocked ? (
+                      <>
+                        <Lock size={15} className="text-jaune-vif" />
+                        <span>Code requis • Déverrouiller</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download size={16} className="text-jaune-vif" />
+                        <span>Consulter / Télécharger</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
-              
-              <div className="shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
-                <a 
-                  href={ressource.google_drive_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-bleu hover:bg-bleu-royal text-white rounded-xl font-semibold text-xs uppercase tracking-wider transition-all duration-200 shadow-xs hover:shadow-md group-hover:bg-bleu-royal"
+            );
+          })}
+        </div>
+      )}
+
+      {/* MODAL DE DEVERROUILLAGE PAR MOT DE PASSE */}
+      {activePasswordRessource && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            {/* Header */}
+            <div className="p-5 border-b border-gray-100 flex items-start justify-between bg-amber-50/60">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                  <Lock size={20} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-anthracite leading-tight">
+                    Document Sécurisé
+                  </h3>
+                  <span className="text-[11px] font-semibold text-amber-800 uppercase tracking-wide">
+                    Accès réservé aux enseignants
+                  </span>
+                </div>
+              </div>
+              <button 
+                onClick={() => { setActivePasswordRessource(null); setPasswordError(false); }}
+                className="text-gray-400 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Fermer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Body */}
+            <form onSubmit={handleUnlockSubmit} className="p-5 space-y-4">
+              <div>
+                <p className="text-xs text-gray-500 mb-1">Document ciblé :</p>
+                <p className="text-sm font-semibold text-anthracite bg-gray-50 p-2.5 rounded-lg border border-gray-200/80">
+                  {activePasswordRessource.titre}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center justify-between">
+                  <span>Mot de passe d'accès <span className="text-bordeaux">*</span></span>
+                  <span className="text-[11px] text-gray-400">Sensible à la casse</span>
+                </label>
+                <div className="relative">
+                  <input 
+                    type={showPassword ? 'text' : 'password'} 
+                    required 
+                    autoFocus
+                    value={enteredPassword} 
+                    onChange={e => { setEnteredPassword(e.target.value); setPasswordError(false); }} 
+                    placeholder="Entrez le mot de passe enseignant..." 
+                    className={cn(
+                      "w-full pl-3.5 pr-10 py-2.5 border rounded-xl text-sm focus:outline-none focus:ring-2 transition-all font-mono",
+                      passwordError 
+                        ? "border-red-500 focus:ring-red-200 bg-red-50/30 text-red-900" 
+                        : "border-gray-300 focus:ring-bordeaux/20 focus:border-bordeaux"
+                    )}
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPassword(!showPassword)} 
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+
+                {passwordError && (
+                  <p className="text-xs text-red-600 font-medium mt-1.5 flex items-center gap-1 animate-in fade-in">
+                    <span>⚠️ Mot de passe incorrect. Veuillez vérifier ou demander le code ci-dessous.</span>
+                  </p>
+                )}
+              </div>
+
+              <div className="pt-2 flex flex-col gap-2">
+                <button 
+                  type="submit" 
+                  className="w-full py-2.5 px-4 bg-bordeaux hover:bg-bordeaux-light text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors shadow-xs flex items-center justify-center gap-2"
                 >
-                  <Download size={16} className="text-jaune-vif" />
-                  <span>Consulter / Télécharger</span>
+                  <Unlock size={16} />
+                  <span>Déverrouiller & Télécharger</span>
+                </button>
+                <button 
+                  type="button" 
+                  onClick={() => { setActivePasswordRessource(null); setPasswordError(false); }}
+                  className="w-full py-2 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-medium rounded-xl transition-colors"
+                >
+                  Annuler
+                </button>
+              </div>
+
+              {/* Assistance WhatsApp pour obtenir le mot de passe */}
+              <div className="pt-3 border-t border-gray-100 text-center">
+                <p className="text-[11px] text-gray-500 mb-2">
+                  Vous êtes enseignant ou responsable d'établissement ?
+                </p>
+                <a 
+                  href={`https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
+                    `Bonjour Les Éditions Phénix, je suis enseignant(e) et je souhaiterais obtenir le mot de passe d'accès pour télécharger la ressource : "${activePasswordRessource.titre}". Merci !`
+                  )}`}
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 text-xs font-semibold transition-colors"
+                >
+                  <MessageCircle size={14} className="text-green-600" />
+                  <span>Demander le code d'accès par WhatsApp</span>
                 </a>
               </div>
-            </div>
-          ))}
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase, uploadFile } from '../lib/supabase';
-import { Ouvrage, Collection, ParametresSite, Matiere, Partenaire, Ressource } from '../types';
-import { BookOpen, LogOut, Settings, ListPlus, Edit3, Trash2, Save, X, Plus, ImageIcon, BookText, Building2, FileText, ExternalLink } from 'lucide-react';
+import { Ouvrage, Collection, ParametresSite, Matiere, Partenaire, Ressource, getResourcePassword, cleanResourceFormat } from '../types';
+import { BookOpen, LogOut, Settings, ListPlus, Edit3, Trash2, Save, X, Plus, ImageIcon, BookText, Building2, FileText, ExternalLink, Lock, Unlock } from 'lucide-react';
 import { Logo } from '../components/Logo';
 import { sortCollectionsCanonical } from '../lib/collectionOrder';
 
@@ -282,10 +282,16 @@ export function AdminDashboard() {
         detectedFormat = ressourceFile.name.split('.').pop()?.toUpperCase() || 'DOCUMENT';
       }
 
+      const pureFormat = cleanResourceFormat(detectedFormat || editingRessource?.format || 'PDF');
+      const password = editingRessource?.mot_de_passe?.trim() || null;
+      // Encode password in format as safe fallback if column doesn't exist yet
+      const formatWithFallback = password ? `${pureFormat}|pwd:${password}` : pureFormat;
+
       const ressourceData: any = {
         ...editingRessource,
         google_drive_url: fileUrl,
-        format: detectedFormat || 'PDF',
+        format: formatWithFallback,
+        mot_de_passe: password,
         matiere: editingRessource?.matiere || null,
         niveau: editingRessource?.niveau || null,
         ouvrage_id: editingRessource?.ouvrage_id || null,
@@ -296,12 +302,28 @@ export function AdminDashboard() {
       delete ressourceData.ouvrages;
       delete ressourceData.collections;
 
-      if (ressourceData.id) {
-        const { error } = await supabase.from('ressources').update(ressourceData).eq('id', ressourceData.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from('ressources').insert([ressourceData]);
-        if (error) throw error;
+      try {
+        if (ressourceData.id) {
+          const { error } = await supabase.from('ressources').update(ressourceData).eq('id', ressourceData.id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from('ressources').insert([ressourceData]);
+          if (error) throw error;
+        }
+      } catch (saveErr: any) {
+        // Fallback if mot_de_passe column does not exist yet in Supabase table
+        if (saveErr?.code === '42703' || saveErr?.message?.includes('mot_de_passe')) {
+          delete ressourceData.mot_de_passe;
+          if (ressourceData.id) {
+            const { error: retryError } = await supabase.from('ressources').update(ressourceData).eq('id', ressourceData.id);
+            if (retryError) throw retryError;
+          } else {
+            const { error: retryError } = await supabase.from('ressources').insert([ressourceData]);
+            if (retryError) throw retryError;
+          }
+        } else {
+          throw saveErr;
+        }
       }
 
       await fetchData();
@@ -617,7 +639,7 @@ export function AdminDashboard() {
                     <p className="text-sm text-gray-500">Gérez les fiches de cours, corrigés, exercices et documents téléchargeables.</p>
                   </div>
                   <button 
-                    onClick={() => { setEditingRessource({ publie: true, type: 'Fiche de cours', format: 'PDF' }); setRessourceFile(null); setIsRessourceModalOpen(true); }}
+                    onClick={() => { setEditingRessource({ publie: true, type: 'Fiche de cours', format: 'PDF', mot_de_passe: '' }); setRessourceFile(null); setIsRessourceModalOpen(true); }}
                     className="flex items-center gap-2 bg-bordeaux text-white px-4 py-2 rounded-md hover:bg-bordeaux-light transition-colors"
                   >
                     <Plus size={18} /> Ajouter
@@ -625,54 +647,74 @@ export function AdminDashboard() {
                 </div>
                 
                 <div className="space-y-4">
-                  {ressources.map(res => (
-                    <div key={res.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl gap-4 hover:bg-gray-50/80 transition-colors">
-                      <div className="flex items-start gap-3">
-                        <div className="p-3 bg-white border border-gray-200 rounded-lg text-bordeaux shrink-0">
-                          <FileText size={22} />
-                        </div>
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2 mb-1">
-                            <span className="px-2 py-0.5 bg-bordeaux/10 text-bordeaux text-xs font-bold rounded uppercase">
-                              {res.type}
-                            </span>
-                            {res.format && (
-                              <span className="px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded">
-                                {res.format}
+                  {ressources.map(res => {
+                    const resPwd = getResourcePassword(res);
+                    const displayFmt = cleanResourceFormat(res.format);
+                    return (
+                      <div key={res.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl gap-4 hover:bg-gray-50/80 transition-colors">
+                        <div className="flex items-start gap-3">
+                          <div className="p-3 bg-white border border-gray-200 rounded-lg text-bordeaux shrink-0">
+                            <FileText size={22} />
+                          </div>
+                          <div>
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
+                              <span className="px-2 py-0.5 bg-bordeaux/10 text-bordeaux text-xs font-bold rounded uppercase">
+                                {res.type}
                               </span>
-                            )}
-                            <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${res.publie ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'}`}>
-                              {res.publie ? 'Publié' : 'Masqué'}
-                            </span>
-                          </div>
-                          <h4 className="font-bold text-anthracite text-base">{res.titre}</h4>
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 mt-1">
-                            {res.niveau && <span><strong>Niveau :</strong> {res.niveau}</span>}
-                            {res.matiere && <span><strong>Matière :</strong> {res.matiere}</span>}
-                            {res.ouvrages?.titre && <span><strong>Ouvrage lié :</strong> {res.ouvrages.titre}</span>}
-                            {res.collections?.nom && <span><strong>Collection :</strong> {res.collections.nom}</span>}
+                              {displayFmt && (
+                                <span className="px-2 py-0.5 bg-gray-200 text-gray-700 text-xs font-semibold rounded">
+                                  {displayFmt}
+                                </span>
+                              )}
+                              {resPwd ? (
+                                <span className="px-2 py-0.5 bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold rounded-md flex items-center gap-1" title={`Code d'accès : ${resPwd}`}>
+                                  <Lock size={12} className="text-amber-700" /> Protégé ({resPwd})
+                                </span>
+                              ) : (
+                                <span className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded flex items-center gap-1">
+                                  <Unlock size={11} className="text-gray-400" /> Libre
+                                </span>
+                              )}
+                              <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${res.publie ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'}`}>
+                                {res.publie ? 'Publié' : 'Masqué'}
+                              </span>
+                            </div>
+                            <h4 className="font-bold text-anthracite text-base">{res.titre}</h4>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 mt-1">
+                              {res.niveau && <span><strong>Niveau :</strong> {res.niveau}</span>}
+                              {res.matiere && <span><strong>Matière :</strong> {res.matiere}</span>}
+                              {res.ouvrages?.titre && <span><strong>Ouvrage lié :</strong> {res.ouvrages.titre}</span>}
+                              {res.collections?.nom && <span><strong>Collection :</strong> {res.collections.nom}</span>}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="flex items-center gap-3 self-end sm:self-center shrink-0">
-                        {res.google_drive_url && (
-                          <a 
-                            href={res.google_drive_url} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-xs bg-white border border-gray-300 text-gray-700 px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-1.5"
+                        <div className="flex items-center gap-3 self-end sm:self-center shrink-0">
+                          {res.google_drive_url && (
+                            <a 
+                              href={res.google_drive_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-xs bg-white border border-gray-300 text-gray-700 px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-1.5"
+                            >
+                              <ExternalLink size={14} /> Voir
+                            </a>
+                          )}
+                          <button 
+                            onClick={() => { 
+                              setEditingRessource({
+                                ...res,
+                                mot_de_passe: resPwd || '',
+                                format: displayFmt
+                              }); 
+                              setRessourceFile(null); 
+                              setIsRessourceModalOpen(true); 
+                            }} 
+                            className="p-1.5 text-gray-500 hover:text-bordeaux rounded hover:bg-white transition-colors"
+                            title="Modifier"
                           >
-                            <ExternalLink size={14} /> Voir
-                          </a>
-                        )}
-                        <button 
-                          onClick={() => { setEditingRessource(res); setRessourceFile(null); setIsRessourceModalOpen(true); }} 
-                          className="p-1.5 text-gray-500 hover:text-bordeaux rounded hover:bg-white transition-colors"
-                          title="Modifier"
-                        >
-                          <Edit3 size={18} />
-                        </button>
+                            <Edit3 size={18} />
+                          </button>
                         <button 
                           onClick={() => handleDeleteRessource(res.id)} 
                           className="p-1.5 text-gray-500 hover:text-red-600 rounded hover:bg-white transition-colors"
@@ -682,7 +724,8 @@ export function AdminDashboard() {
                         </button>
                       </div>
                     </div>
-                  ))}
+                  );
+                })}
 
                   {ressources.length === 0 && (
                     <div className="p-12 text-center text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-300">
@@ -1497,6 +1540,37 @@ export function AdminDashboard() {
                       onChange={e => setEditingRessource({...editingRessource, google_drive_url: e.target.value})} 
                       className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-bordeaux/20 focus:border-bordeaux" 
                       placeholder="https://drive.google.com/file/d/..." 
+                    />
+                  </div>
+                </div>
+
+                {/* Protection par Mot de Passe */}
+                <div className="p-3.5 bg-amber-50/70 border border-amber-200/90 rounded-xl space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                      <Lock size={14} className="text-amber-700" />
+                      Protection par mot de passe (Optionnel)
+                    </label>
+                    {editingRessource?.mot_de_passe?.trim() ? (
+                      <span className="text-[10px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <Lock size={10} /> Protégé
+                      </span>
+                    ) : (
+                      <span className="text-[10px] bg-white text-gray-500 font-medium px-2 py-0.5 rounded-full border border-gray-200">
+                        Libre d'accès
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-amber-900/80 leading-relaxed">
+                    Laissez vide pour un téléchargement public. Si vous définissez un code secret (ex: réservé aux enseignants pour les corrigés), le visiteur devra saisir ce mot de passe pour télécharger.
+                  </p>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      value={editingRessource?.mot_de_passe || ''} 
+                      onChange={e => setEditingRessource({...editingRessource, mot_de_passe: e.target.value})} 
+                      className="w-full px-3 py-2 border border-amber-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 font-mono text-amber-950 placeholder:text-gray-400 font-semibold" 
+                      placeholder="ex: PROF2026 ou CORRIGE-HG-6E" 
                     />
                   </div>
                 </div>
