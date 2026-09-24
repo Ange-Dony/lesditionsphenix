@@ -35,8 +35,11 @@ export interface Ouvrage {
   disponibilite: boolean;
   couverture_url: string | null;
   extrait_url: string | null;
+  isbn?: string | null;
+  nombre_pages?: number | null;
   created_at: string;
   collections?: Collection; // joined relation
+  ressources?: Ressource[];
 }
 
 export interface Ressource {
